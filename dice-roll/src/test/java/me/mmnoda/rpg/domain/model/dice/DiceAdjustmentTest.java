@@ -15,7 +15,7 @@ public class DiceAdjustmentTest {
     private String formatted;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         diceAdjustment = DiceAdjustment.ZERO;
     }
 
@@ -30,14 +30,14 @@ public class DiceAdjustmentTest {
     public void should_format_to_positive_value() {
         diceAdjustment = DiceAdjustment.of(1);
         format();
-        assertFormattedIsEqualTo("+ 1");
+        assertFormattedIsEqualTo(" + 1");
     }
 
     @Test
     public void should_format_to_negative_value() {
         diceAdjustment = DiceAdjustment.of(-5);
         format();
-        assertFormattedIsEqualTo("- 5");
+        assertFormattedIsEqualTo(" - 5");
     }
 
     private void assertFormattedIsEqualTo(String expected) {

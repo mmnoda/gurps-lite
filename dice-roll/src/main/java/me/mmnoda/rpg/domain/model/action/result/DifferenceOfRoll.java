@@ -12,7 +12,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, Formattable {
+public final class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, Formattable {
 
     private static final Range<DifferenceOfRoll> AT_MOST_10_NEGATIVE = Range.atMost(valueOf(-10));
 

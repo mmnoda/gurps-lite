@@ -12,7 +12,6 @@ public interface SingleRollable {
 
     default SingleRollResult roll() {
         return SingleRollResult.of(new Random().nextInt(getNumberOfFaces().intValue()) + 1);
-
     }
 
     NumberOfFaces getNumberOfFaces();

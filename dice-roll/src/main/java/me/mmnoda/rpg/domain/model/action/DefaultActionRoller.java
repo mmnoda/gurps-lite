@@ -22,23 +22,26 @@ public class DefaultActionRoller implements ActionRoller {
         this.criticalDetermination = builder.getCriticalDetermination();
     }
 
-    public static DefaultActionRoller newDefaultActionRoller(ActionRollerBuilder builder) {
+    public static DefaultActionRoller of(ActionRollerBuilder builder) {
         return new DefaultActionRoller(builder);
     }
 
-    public static DefaultActionRoller newDefaultActionRoller() {
+    public static DefaultActionRoller OfDefault() {
         return new DefaultActionRoller(DefaultActionRollerBuilder.INSTANCE);
     }
 
     @Override
     public ActionRollResult roll(EffectiveValue effectiveValue) {
-        RollResultSum resultSum = roll3D();
-        DifferenceOfRoll differenceOfRoll = resultSum.calculateDifference(effectiveValue);
-        CriticalStatus criticalStatus = determineCriticalStatus(effectiveValue, resultSum, differenceOfRoll);
+        final RollResultSum resultSum = roll3D();
+        final DifferenceOfRoll differenceOfRoll = resultSum.calculateDifference(effectiveValue);
+        final CriticalStatus criticalStatus = determineCriticalStatus(effectiveValue, resultSum, differenceOfRoll);
 
-        return ActionRollResult.builder().withCriticalStatus(criticalStatus).withDifferenceOfRoll(differenceOfRoll).
-                withEffectiveValue(effectiveValue).withRollResultSum(resultSum).
-                build();
+        return ActionRollResult.builder()
+                .withCriticalStatus(criticalStatus)
+                .withDifferenceOfRoll(differenceOfRoll)
+                .withEffectiveValue(effectiveValue)
+                .withRollResultSum(resultSum)
+                .build();
     }
 
     private CriticalStatus determineCriticalStatus(EffectiveValue effectiveValue, RollResultSum resultSum, DifferenceOfRoll differenceOfRoll) {

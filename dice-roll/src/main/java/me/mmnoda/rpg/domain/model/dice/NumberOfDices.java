@@ -54,8 +54,15 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
         return false;
     }
 
+    @Override
+    public String toString() {
+        return toStringHelper(this)
+                .add("quantity", quantity)
+                .toString();
+    }
+
     public DiceSum maxDiceSum(final NumberOfFaces numberOfFaces) {
-        return DiceSum.of(quantity.multiply(numberOfFaces.toBigInteger()));
+        return DiceSum.of(numberOfFaces.toBigInteger());
     }
 
     public DiceSum minDiceSum() {
@@ -64,13 +71,6 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
 
     public DiceSum avgDiceSum(final NumberOfFaces numberOfFaces) {
         return maxDiceSum(numberOfFaces).half();
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("quantity", quantity)
-                .toString();
     }
 
     @Override

@@ -75,7 +75,7 @@ public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
         if (hasAValue()) {
-            formatter.format("%s %s", SIGNAL_MAP.get(compareTo(ZERO)), value.abs().toString());
+            formatter.format(" %s %s", SIGNAL_MAP.get(compareTo(ZERO)), value.abs().toString());
         }
     }
 }

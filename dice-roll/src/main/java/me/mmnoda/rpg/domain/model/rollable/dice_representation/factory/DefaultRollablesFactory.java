@@ -13,7 +13,7 @@ public enum DefaultRollablesFactory implements RollablesFactory {
     INSTANCE;
 
     @Override
-    public DiceRepresentation build3D6() {
+    public final DiceRepresentation build3D6() {
         return DefaultDiceRepresentation
                 .of(Dices.D6.getInstance(), THREE);
     }

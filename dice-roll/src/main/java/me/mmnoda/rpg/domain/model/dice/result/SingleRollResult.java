@@ -9,11 +9,15 @@ import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
-public class SingleRollResult implements Serializable, Formattable {
+public final class SingleRollResult implements Serializable, Formattable, Comparable<SingleRollResult> {
+
+    public static final SingleRollResult ONE = new SingleRollResult(BigInteger.ONE);
 
     private final BigInteger value;
 
@@ -21,16 +25,28 @@ public class SingleRollResult implements Serializable, Formattable {
         this.value = value;
     }
 
-    public static SingleRollResult of(int value) {
-        return of(BigInteger.valueOf(value));
-    }
-
-    public static SingleRollResult of(NumberOfFaces numberOfFaces) {
-        return of(numberOfFaces.intValue());
-    }
-
-    public static SingleRollResult of(BigInteger value) {
+    public static SingleRollResult of(final NumberOfFaces numberOfFaces, final BigInteger value) {
+        validate(numberOfFaces, value);
         return new SingleRollResult(value);
+    }
+
+    public static SingleRollResult of(final BigInteger value) {
+        return of(NumberOfFaces._6, value);
+    }
+
+    public static SingleRollResult of(final NumberOfFaces numberOfFaces, final int value) {
+        return of(numberOfFaces, BigInteger.valueOf(value));
+    }
+
+    public static SingleRollResult of(final int value) {
+        return of(NumberOfFaces._6, BigInteger.valueOf(value));
+    }
+
+    private static void validate(NumberOfFaces numberOfFaces, BigInteger value) {
+        checkNotNull(value);
+        checkNotNull(numberOfFaces);
+        checkArgument(value.compareTo(BigInteger.ZERO) > 0, "the value must the greater than ZERO");
+        checkArgument(value.compareTo(numberOfFaces.toBigInteger()) <= 0, String.format("tha value must be equals or less than %s", numberOfFaces));
     }
 
     @Override
@@ -66,5 +82,10 @@ public class SingleRollResult implements Serializable, Formattable {
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
         formatter.format(value.toString());
+    }
+
+    @Override
+    public int compareTo(SingleRollResult o) {
+        return this.value.compareTo(o.value);
     }
 }
