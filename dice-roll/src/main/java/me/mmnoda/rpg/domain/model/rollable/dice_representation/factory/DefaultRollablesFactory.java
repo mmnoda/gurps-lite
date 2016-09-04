@@ -1,8 +1,8 @@
 package me.mmnoda.rpg.domain.model.rollable.dice_representation.factory;
 
 import me.mmnoda.rpg.domain.model.dice.factory.Dices;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DefaultDiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DefaultDiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 
 import static me.mmnoda.rpg.domain.model.dice.NumberOfDices.THREE;
 

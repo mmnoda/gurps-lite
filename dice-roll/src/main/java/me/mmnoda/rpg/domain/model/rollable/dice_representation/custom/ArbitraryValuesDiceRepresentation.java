@@ -1,10 +1,11 @@
-package me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation;
+package me.mmnoda.rpg.domain.model.rollable.dice_representation.custom;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.NumberOfFaces;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import java.util.Deque;
@@ -18,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationDecorator {
+public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationDecorator {
 
     private final List<SingleRollResult> arbitraryRollResults;
     private final SingleRollResult first;

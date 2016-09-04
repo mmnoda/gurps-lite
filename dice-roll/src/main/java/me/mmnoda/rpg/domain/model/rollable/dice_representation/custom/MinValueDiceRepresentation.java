@@ -1,8 +1,9 @@
-package me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation;
+package me.mmnoda.rpg.domain.model.rollable.dice_representation.custom;
 
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.NumberOfFaces;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import java.util.Objects;
@@ -12,20 +13,16 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-final class MaxValueDiceRepresentation extends AbstractDiceRepresentationDecorator {
+public class MinValueDiceRepresentation extends AbstractDiceRepresentationDecorator {
 
-    private MaxValueDiceRepresentation(DiceRepresentation decorated) {
+    public MinValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
-    }
-
-    public static MaxValueDiceRepresentation of(DiceRepresentation decorated) {
-        return new MaxValueDiceRepresentation(decorated);
     }
 
     @Override
     protected void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces) {
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(numberOfDice, SingleRollResult.of(numberOfDices.maxDiceSum(numberOfFaces).toBigInteger()));
+            builder.add(numberOfDice, SingleRollResult.of(numberOfDices.minDiceSum().toBigInteger()));
         }
     }
 
@@ -39,8 +36,8 @@ final class MaxValueDiceRepresentation extends AbstractDiceRepresentationDecorat
         if (this == o)
             return true;
 
-        if (o instanceof MaxValueDiceRepresentation){
-            final MaxValueDiceRepresentation other = (MaxValueDiceRepresentation) o;
+        if (o instanceof MinValueDiceRepresentation){
+            final MinValueDiceRepresentation other = (MinValueDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }
 
@@ -53,5 +50,4 @@ final class MaxValueDiceRepresentation extends AbstractDiceRepresentationDecorat
                 .add("decorated", decorated)
                 .toString();
     }
-
 }

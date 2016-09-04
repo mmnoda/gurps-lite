@@ -6,7 +6,7 @@ import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
 import me.mmnoda.rpg.domain.model.action.result.ActionRollResult;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 /**

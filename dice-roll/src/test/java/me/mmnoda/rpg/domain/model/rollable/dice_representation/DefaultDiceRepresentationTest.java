@@ -3,7 +3,6 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DefaultDiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 import org.junit.After;
 import org.junit.Test;

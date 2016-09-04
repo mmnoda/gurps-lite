@@ -1,8 +1,9 @@
-package me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation;
+package me.mmnoda.rpg.domain.model.rollable.dice_representation.custom;
 
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.NumberOfFaces;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import java.util.Formattable;
@@ -13,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-abstract class AbstractDiceRepresentationDecorator implements DiceRepresentation, Formattable {
+public abstract class AbstractDiceRepresentationDecorator implements DiceRepresentation, Formattable {
 
     protected final DiceRepresentation decorated;
 
