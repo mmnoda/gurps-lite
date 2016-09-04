@@ -1,14 +1,18 @@
 package me.mmnoda.rpg.domain.model.action.result;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 
 import java.math.BigInteger;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.Objects;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public class DifferenceOfRoll implements Comparable<DifferenceOfRoll> {
+public class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, Formattable {
 
     private static final Range<DifferenceOfRoll> AT_MOST_10_NEGATIVE = Range.atMost(valueOf(-10));
 
@@ -28,7 +32,7 @@ public class DifferenceOfRoll implements Comparable<DifferenceOfRoll> {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(value);
+        return Objects.hash(value);
     }
 
     @Override
@@ -38,14 +42,16 @@ public class DifferenceOfRoll implements Comparable<DifferenceOfRoll> {
         }
         if (obj instanceof DifferenceOfRoll) {
             final DifferenceOfRoll other = (DifferenceOfRoll) obj;
-            return Objects.equal(this.value, other.value);
+            return Objects.equals(this.value, other.value);
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return value.toString();
+        return toStringHelper(this)
+                .add("value", value)
+                .toString();
     }
 
     public boolean isSucceeded() {
@@ -59,5 +65,10 @@ public class DifferenceOfRoll implements Comparable<DifferenceOfRoll> {
     @Override
     public int compareTo(DifferenceOfRoll o) {
         return value.compareTo(o.value);
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format(value.toString());
     }
 }

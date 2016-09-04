@@ -1,7 +1,9 @@
 package me.mmnoda.rpg.domain.model.dice;
 
-import me.mmnoda.rpg.domain.model.rollable.SingleRollable;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.SingleRollable;
 
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -9,7 +11,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class Dice implements SingleRollable {
+public class Dice implements SingleRollable, Formattable {
 
     private final NumberOfFaces numberOfFaces;
 
@@ -49,5 +51,10 @@ public class Dice implements SingleRollable {
     @Override
     public NumberOfFaces getNumberOfFaces() {
         return numberOfFaces;
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format("%s", numberOfFaces);
     }
 }

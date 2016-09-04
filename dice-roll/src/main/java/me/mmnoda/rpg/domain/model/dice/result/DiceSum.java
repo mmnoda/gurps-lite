@@ -1,28 +1,26 @@
 package me.mmnoda.rpg.domain.model.dice.result;
 
 import com.google.common.collect.Range;
-import me.mmnoda.rpg.domain.model.action.EffectiveValue;
-import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.OverallValue;
 
 import java.math.BigInteger;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll.newDifferenceOfRoll;
-import static me.mmnoda.rpg.domain.model.dice.result.OverallValue.newOverallValue;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
-public class DiceSum implements Comparable<DiceSum> {
-    public static final DiceSum ZERO = valueOf(0);
+public final class DiceSum implements Comparable<DiceSum>, Formattable {
 
-    private static final Range<DiceSum> NATURAL_CRITICAL_SUCCESS = Range.closed(valueOf(3), valueOf(4));
-    private static final Range<DiceSum> PROBABLE_CRITICAL_SUCCESS = Range.closed(valueOf(5), valueOf(6));
-    private static final DiceSum NATURAL_CRITICAL_MISS = valueOf(18);
-    private static final DiceSum PROBABLE_CRITICAL_MISS = valueOf(17);
-    private static final DiceSum FIVE = valueOf(5);
+    public static final DiceSum ZERO = of(0);
+
+    private static final Range<DiceSum> NATURAL_CRITICAL_SUCCESS = Range.closed(of(3), of(4));
+    private static final DiceSum NATURAL_CRITICAL_MISS = of(18);
 
     private final BigInteger value;
 
@@ -30,12 +28,13 @@ public class DiceSum implements Comparable<DiceSum> {
         this.value = value;
     }
 
-    public static DiceSum newDiceSum(BigInteger value) {
+    public static DiceSum of(final BigInteger value) {
+        checkNotNull(value);
         return new DiceSum(value);
     }
 
-    public static DiceSum valueOf(long value) {
-        return newDiceSum(BigInteger.valueOf(value));
+    public static DiceSum of(long value) {
+        return of(BigInteger.valueOf(value));
     }
 
     @Override
@@ -66,12 +65,16 @@ public class DiceSum implements Comparable<DiceSum> {
         return value;
     }
 
-    public DiceSum add(SingleRollResult rollResult) {
-        return newDiceSum(value.add(rollResult.toBigInteger()));
+    public DiceSum add(final SingleRollResult rollResult) {
+        return of(value.add(rollResult.toBigInteger()));
+    }
+
+    public DiceSum half(){
+        return of(value.divide(BigInteger.valueOf(2)));
     }
 
     public OverallValue calculateOverall(DiceAdjustment adjustment) {
-        return newOverallValue(value.add(adjustment.toBigInteger()));
+        return OverallValue.of(value.add(adjustment.toBigInteger()));
     }
 
     public boolean isNaturalCriticalSuccess() {
@@ -82,21 +85,13 @@ public class DiceSum implements Comparable<DiceSum> {
         return NATURAL_CRITICAL_MISS.equals(this);
     }
 
-    public boolean isCriticalMiss(EffectiveValue effectiveValue) {
-        return effectiveValue.isLessThan16() && PROBABLE_CRITICAL_MISS.equals(this);
-    }
-
-    public boolean isCriticalSuccess(EffectiveValue effectiveValue) {
-        return PROBABLE_CRITICAL_SUCCESS.contains(this) && (effectiveValue.isGreaterEquals16() ||
-                (effectiveValue.isGreaterEquals15() && FIVE.equals(this)));
-    }
-
-    public DifferenceOfRoll calculateDifference(EffectiveValue effectiveValue) {
-        return newDifferenceOfRoll(effectiveValue.toBigInteger().subtract(value));
-    }
-
     @Override
     public int compareTo(DiceSum o) {
         return value.compareTo(o.value);
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format(value.toString());
     }
 }

@@ -6,8 +6,8 @@ import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
 import me.mmnoda.rpg.domain.model.action.result.ActionRollResult;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
-import me.mmnoda.rpg.domain.model.dice.result.RollResultSum;
-import me.mmnoda.rpg.domain.model.rollable.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 /**
  *
@@ -42,7 +42,7 @@ public class DefaultActionRoller implements ActionRoller {
     }
 
     private CriticalStatus determineCriticalStatus(EffectiveValue effectiveValue, RollResultSum resultSum, DifferenceOfRoll differenceOfRoll) {
-        return criticalDetermination.determine(effectiveValue, resultSum.getSum(), differenceOfRoll);
+        return criticalDetermination.determine(effectiveValue, resultSum, differenceOfRoll);
     }
 
     private RollResultSum roll3D() {

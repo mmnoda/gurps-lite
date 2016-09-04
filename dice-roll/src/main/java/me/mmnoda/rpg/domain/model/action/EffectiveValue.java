@@ -1,14 +1,18 @@
 package me.mmnoda.rpg.domain.model.action;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 
 import java.math.BigInteger;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.Objects;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public class EffectiveValue implements Comparable<EffectiveValue> {
+public class EffectiveValue implements Comparable<EffectiveValue>, Formattable {
 
     private static final Range<EffectiveValue> AT_LEAST_FIFTEEN = Range.atLeast(valueOf(15));
     private static final Range<EffectiveValue> AT_LEAST_SIXTEEN = Range.atLeast(valueOf(16));
@@ -30,7 +34,7 @@ public class EffectiveValue implements Comparable<EffectiveValue> {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(value);
+        return Objects.hash(value);
     }
 
     @Override
@@ -40,14 +44,16 @@ public class EffectiveValue implements Comparable<EffectiveValue> {
         }
         if (obj instanceof EffectiveValue) {
             final EffectiveValue other = (EffectiveValue) obj;
-            return Objects.equal(this.value, other.value);
+            return Objects.equals(this.value, other.value);
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return value.toString();
+        return toStringHelper(this)
+                .add("value", value)
+                .toString();
     }
 
     public BigInteger toBigInteger() {
@@ -69,5 +75,10 @@ public class EffectiveValue implements Comparable<EffectiveValue> {
     @Override
     public int compareTo(EffectiveValue o) {
         return value.compareTo(o.value);
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format(value.toString());
     }
 }

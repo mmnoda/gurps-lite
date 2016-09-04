@@ -3,16 +3,18 @@ package me.mmnoda.rpg.domain.model.dice;
 import me.mmnoda.rpg.domain.model.dice.result.DiceSum;
 
 import java.math.BigInteger;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.Iterator;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static me.mmnoda.rpg.domain.model.dice.result.DiceSum.newDiceSum;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
-public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices> {
+public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
     public static final NumberOfDices THREE = newNumberOfDices(BigInteger.valueOf(3));
 
@@ -25,7 +27,12 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
     }
 
     public static NumberOfDices newNumberOfDices(BigInteger quantity) {
+        checkNotNull(quantity);
         return new NumberOfDices(quantity);
+    }
+
+    public static NumberOfDices of(long quantity) {
+        return newNumberOfDices(BigInteger.valueOf(quantity));
     }
 
     @Override
@@ -47,12 +54,16 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
         return false;
     }
 
-    public DiceSum maxDiceSum(NumberOfFaces numberOfFaces) {
-        return newDiceSum(quantity.multiply(numberOfFaces.toBigInteger()));
+    public DiceSum maxDiceSum(final NumberOfFaces numberOfFaces) {
+        return DiceSum.of(quantity.multiply(numberOfFaces.toBigInteger()));
     }
 
     public DiceSum minDiceSum() {
-        return newDiceSum(quantity);
+        return DiceSum.of(quantity);
+    }
+
+    public DiceSum avgDiceSum(final NumberOfFaces numberOfFaces) {
+        return maxDiceSum(numberOfFaces).half();
     }
 
     @Override
@@ -74,6 +85,11 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
 
     private NumberOfDices plusOne() {
         return newNumberOfDices(quantity.add(BigInteger.ONE));
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format(quantity.toString());
     }
 
     private final class NumberOfDicesIterator implements Iterator<NumberOfDices> {

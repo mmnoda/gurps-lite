@@ -17,7 +17,7 @@ public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
 
     public static final DiceAdjustment ZERO = newDiceAdjustment(BigInteger.ZERO);
 
-    private static final Map<Integer, String> SIGNAL_MAP = ImmutableMap.of(-1, "+", 0, "", 1, "-");
+    private static final Map<Integer, String> SIGNAL_MAP = ImmutableMap.of(+1, "+", 0, "", -1, "-");
 
     private final BigInteger value;
 
@@ -27,6 +27,10 @@ public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
 
     public static DiceAdjustment newDiceAdjustment(BigInteger value) {
         return new DiceAdjustment(value);
+    }
+
+    public static DiceAdjustment of(long value) {
+        return newDiceAdjustment(BigInteger.valueOf(value));
     }
 
     @Override
@@ -70,6 +74,8 @@ public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
 
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
-        formatter.format(SIGNAL_MAP.get(compareTo(ZERO)) + value.toString());
+        if (hasAValue()) {
+            formatter.format("%s %s", SIGNAL_MAP.get(compareTo(ZERO)), value.abs().toString());
+        }
     }
 }

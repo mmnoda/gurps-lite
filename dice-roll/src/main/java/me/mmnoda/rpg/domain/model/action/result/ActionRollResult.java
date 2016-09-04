@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
-import me.mmnoda.rpg.domain.model.dice.result.RollResultSum;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 /**
  *

@@ -1,10 +1,11 @@
 package me.mmnoda.rpg.domain.model.action.builder;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
-import me.mmnoda.rpg.domain.model.rollable.DiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.RollablesFactory;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.RollablesFactory;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
@@ -43,7 +44,7 @@ public class CustomActionRollerBuilder implements ActionRollerBuilder {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).
+        return toStringHelper(this).
                 add("rollablesFactory", rollablesFactory).
                 add("criticalDetermination", criticalDetermination).toString();
     }

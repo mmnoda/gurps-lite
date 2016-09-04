@@ -2,8 +2,8 @@ package me.mmnoda.rpg.domain.model.action.builder;
 
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.critical.DefaultCriticalDetermination;
-import me.mmnoda.rpg.domain.model.rollable.DiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.DefaultRollablesFactory;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.DefaultRollablesFactory;
 
 /**
  *

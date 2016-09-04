@@ -2,61 +2,62 @@ package me.mmnoda.rpg.domain.model.action.critical;
 
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
-import me.mmnoda.rpg.domain.model.dice.result.DiceSum;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 /**
  *
  */
+// TODO implement template method
 public enum DefaultCriticalDetermination implements CriticalDetermination {
 
     TO_FIND_OUT {
         @Override
-        public CriticalStatus determine(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return delegateToCriticalMiss(effectiveValue, diceSum, differenceOfRoll);
+        public CriticalStatus determine(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return delegateToCriticalMiss(effectiveValue, rollResultSum, differenceOfRoll);
         }
 
-        private CriticalStatus delegateToCriticalMiss(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return CRITICAL_MISS.determine(effectiveValue, diceSum, differenceOfRoll);
+        private CriticalStatus delegateToCriticalMiss(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return CRITICAL_MISS.determine(effectiveValue, rollResultSum, differenceOfRoll);
         }
     },
 
     CRITICAL_MISS {
         @Override
-        public CriticalStatus determine(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return isCriticalMiss(effectiveValue, diceSum, differenceOfRoll) ? CriticalStatus.CRITICAL_MISS :
-                    delegateToCriticalSuccess(effectiveValue, diceSum, differenceOfRoll);
+        public CriticalStatus determine(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return isCriticalMiss(effectiveValue, rollResultSum, differenceOfRoll) ? CriticalStatus.CRITICAL_MISS :
+                    delegateToCriticalSuccess(effectiveValue, rollResultSum, differenceOfRoll);
         }
 
-        private boolean isCriticalMiss(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return diceSum.isNaturalCriticalMiss() || diceSum.isCriticalMiss(effectiveValue) || differenceOfRoll.isFailedAt10Negative();
+        private boolean isCriticalMiss(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return rollResultSum.isNaturalCriticalMiss() || rollResultSum.isCriticalMiss(effectiveValue) || differenceOfRoll.isFailedAt10Negative();
         }
 
-        private CriticalStatus delegateToCriticalSuccess(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return CRITICAL_SUCCESS.determine(effectiveValue, diceSum, differenceOfRoll);
+        private CriticalStatus delegateToCriticalSuccess(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return CRITICAL_SUCCESS.determine(effectiveValue, rollResultSum, differenceOfRoll);
         }
 
     },
 
     CRITICAL_SUCCESS {
         @Override
-        public CriticalStatus determine(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return isCriticalSuccess(effectiveValue, diceSum) ? CriticalStatus.CRITICAL_SUCCESS :
-                    delegateToNormal(effectiveValue, diceSum, differenceOfRoll);
+        public CriticalStatus determine(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return isCriticalSuccess(effectiveValue, rollResultSum) ? CriticalStatus.CRITICAL_SUCCESS :
+                    delegateToNormal(effectiveValue, rollResultSum, differenceOfRoll);
         }
 
-        private CriticalStatus delegateToNormal(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
-            return NORMAL.determine(effectiveValue, diceSum, differenceOfRoll);
+        private CriticalStatus delegateToNormal(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
+            return NORMAL.determine(effectiveValue, rollResultSum, differenceOfRoll);
         }
 
-        private boolean isCriticalSuccess(EffectiveValue effectiveValue, DiceSum diceSum) {
-            return diceSum.isNaturalCriticalSuccess() || diceSum.isCriticalSuccess(effectiveValue);
+        private boolean isCriticalSuccess(EffectiveValue effectiveValue, RollResultSum rollResultSum) {
+            return rollResultSum.isNaturalCriticalSuccess() || rollResultSum.isCriticalSuccess(effectiveValue);
         }
 
     },
 
     NORMAL {
         @Override
-        public CriticalStatus determine(EffectiveValue effectiveValue, DiceSum diceSum, DifferenceOfRoll differenceOfRoll) {
+        public CriticalStatus determine(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll) {
             return CriticalStatus.NORMAL;
         }
     }
