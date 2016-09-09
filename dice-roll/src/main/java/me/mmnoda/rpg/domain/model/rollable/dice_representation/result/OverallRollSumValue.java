@@ -15,23 +15,23 @@ import static me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll.newDiffe
 /**
  *
  */
-public final class OverallValue implements Formattable, Comparable<OverallValue> {
+public final class OverallRollSumValue implements Formattable, Comparable<OverallRollSumValue> {
 
-    private static final Range<OverallValue> PROBABLE_CRITICAL_SUCCESS = Range.closed(of(5), of(6));
-    private static final OverallValue PROBABLE_CRITICAL_MISS = of(17);
-    private static final OverallValue FIVE = of(5);
+    private static final Range<OverallRollSumValue> PROBABLE_CRITICAL_SUCCESS = Range.closed(of(5), of(6));
+    private static final OverallRollSumValue PROBABLE_CRITICAL_MISS = of(17);
+    private static final OverallRollSumValue FIVE = of(5);
 
     private final BigInteger value;
 
-    private OverallValue(BigInteger value) {
+    private OverallRollSumValue(BigInteger value) {
         this.value = value;
     }
 
-    public static OverallValue of(BigInteger value) {
-        return new OverallValue(value);
+    public static OverallRollSumValue of(BigInteger value) {
+        return new OverallRollSumValue(value);
     }
 
-    static OverallValue of(int value) {
+    static OverallRollSumValue of(int value) {
         return of(BigInteger.valueOf(value));
     }
 
@@ -45,8 +45,8 @@ public final class OverallValue implements Formattable, Comparable<OverallValue>
         if (this == obj) {
             return true;
         }
-        if (obj instanceof OverallValue) {
-            final OverallValue other = (OverallValue) obj;
+        if (obj instanceof OverallRollSumValue) {
+            final OverallRollSumValue other = (OverallRollSumValue) obj;
             return Objects.equals(this.value, other.value);
         }
         return false;
@@ -59,12 +59,11 @@ public final class OverallValue implements Formattable, Comparable<OverallValue>
                 .toString();
     }
 
-
-    public OverallValue doubleValue() {
+    public OverallRollSumValue doubleValue() {
         return of(value.multiply(BigInteger.valueOf(2)));
     }
 
-    public OverallValue tripleValue() {
+    public OverallRollSumValue tripleValue() {
         return of(value.multiply(BigInteger.valueOf(3)));
     }
 
@@ -87,9 +86,10 @@ public final class OverallValue implements Formattable, Comparable<OverallValue>
     }
 
     @Override
-    public int compareTo(OverallValue o) {
+    public int compareTo(OverallRollSumValue o) {
         return value.compareTo(o.value);
     }
+
 }
 
 

@@ -66,7 +66,7 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
     }
 
     public DiceSum minDiceSum() {
-        return DiceSum.of(quantity);
+        return DiceSum.of(1);
     }
 
     public DiceSum avgDiceSum(final NumberOfFaces numberOfFaces) {

@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationDecorator {
+public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
 
     private final List<SingleRollResult> arbitraryRollResults;
     private final SingleRollResult first;

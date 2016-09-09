@@ -11,7 +11,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class Dice implements SingleRollable, Formattable {
+public class Dice implements SingleRollable, Formattable, Comparable<Dice> {
 
     private final NumberOfFaces numberOfFaces;
 
@@ -56,5 +56,10 @@ public class Dice implements SingleRollable, Formattable {
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
         formatter.format("%s", numberOfFaces);
+    }
+
+    @Override
+    public int compareTo(Dice o) {
+        return numberOfFaces.compareTo(o.numberOfFaces);
     }
 }

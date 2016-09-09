@@ -23,19 +23,37 @@ import static me.mmnoda.rpg.domain.model.dice.result.DiceSum.ZERO;
 public final class RollResultSum implements Serializable, Formattable, Comparable<RollResultSum> {
 
     private final SortedMap<NumberOfDices, SingleRollResult> results;
+    private final Multiplier multiplier;
     private final DiceSum sum;
     private final DiceAdjustment adjustment;
-    private final OverallValue overall;
+    private final OverallRollSumValue overall;
 
     private RollResultSum(Builder builder) {
         this.results = ImmutableSortedMap.copyOf(builder.results);
         this.adjustment = builder.adjustment;
         this.sum = builder.sum;
         this.overall = calculateOverall();
+        this.multiplier = Multiplier.NONE;
     }
 
-    private OverallValue calculateOverall() {
+    private OverallRollSumValue calculateOverall() {
         return sum.calculateOverall(adjustment);
+    }
+
+    private RollResultSum(final RollResultSum original, final Multiplier multiplier) {
+        this.multiplier = multiplier;
+        this.results = original.results;
+        this.sum = original.sum;
+        this.adjustment = original.adjustment;
+        this.overall = multiplier.calculate(original.calculateOverall());
+    }
+
+    public RollResultSum doubleValue() {
+        return new RollResultSum(this, Multiplier.DOUBLE);
+    }
+
+    public RollResultSum tripleValue() {
+        return new RollResultSum(this, Multiplier.TRIPLE);
     }
 
     public static Builder builder() {
@@ -44,7 +62,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     @Override
     public int hashCode() {
-        return Objects.hash(results, adjustment, sum);
+        return Objects.hash(overall, adjustment, sum, multiplier);
     }
 
     @Override
@@ -55,9 +73,10 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
         if (obj instanceof RollResultSum) {
             final RollResultSum other = (RollResultSum) obj;
-            return Objects.equals(this.results, other.results)
+            return Objects.equals(this.overall, other.overall)
                     && Objects.equals(this.adjustment, other.adjustment)
-                    && Objects.equals(this.sum, other.sum);
+                    && Objects.equals(this.sum, other.sum)
+                    && Objects.equals(this.multiplier, other.multiplier);
         }
 
         return false;
@@ -77,12 +96,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         return overall.calculateDifference(effectiveValue);
     }
 
-    @Override
-    public void formatTo(final Formatter formatter, int flags, int width, int precision) {
-        final StringBuilder result = processFormatTo();
-        formatter.format("%s%s = %s", result, adjustment, overall);
-    }
-
     public boolean isNaturalCriticalSuccess() {
         return sum.isNaturalCriticalSuccess();
     }
@@ -97,6 +110,12 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     public boolean isCriticalSuccess(EffectiveValue effectiveValue) {
         return overall.isCriticalSuccess(effectiveValue);
+    }
+
+    @Override
+    public void formatTo(final Formatter formatter, int flags, int width, int precision) {
+        final StringBuilder result = processFormatTo();
+        formatter.format("%s%s = %s", result, adjustment, overall);
     }
 
     private StringBuilder processFormatTo() {
@@ -121,6 +140,10 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
     @Override
     public int compareTo(RollResultSum o) {
         return this.overall.compareTo(o.overall);
+    }
+
+    public OverallRollSumValue getOverall() {
+        return overall;
     }
 
     public static final class Builder {
@@ -153,5 +176,31 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
             checkState(!results.isEmpty(), "there are not results");
             return new RollResultSum(this);
         }
+    }
+
+    private enum Multiplier {
+
+        NONE {
+            @Override
+            OverallRollSumValue calculate(OverallRollSumValue overallValue) {
+                return overallValue;
+            }
+        },
+
+        DOUBLE {
+            @Override
+            OverallRollSumValue calculate(OverallRollSumValue overallValue) {
+                return overallValue.doubleValue();
+            }
+        },
+
+        TRIPLE {
+            @Override
+            OverallRollSumValue calculate(OverallRollSumValue overallValue) {
+                return overallValue.tripleValue();
+            }
+        };
+
+        abstract OverallRollSumValue calculate(final OverallRollSumValue overallValue);
     }
 }

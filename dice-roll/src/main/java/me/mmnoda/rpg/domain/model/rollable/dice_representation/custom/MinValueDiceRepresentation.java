@@ -13,10 +13,14 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class MinValueDiceRepresentation extends AbstractDiceRepresentationDecorator {
+public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
 
-    public MinValueDiceRepresentation(DiceRepresentation decorated) {
+    private MinValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
+    }
+
+    public static MinValueDiceRepresentation of(DiceRepresentation decorated) {
+        return new MinValueDiceRepresentation(decorated);
     }
 
     @Override

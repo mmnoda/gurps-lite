@@ -2,7 +2,7 @@ package me.mmnoda.rpg.domain.model.dice.result;
 
 import com.google.common.collect.Range;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.OverallValue;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.OverallRollSumValue;
 
 import java.math.BigInteger;
 import java.util.Formattable;
@@ -73,8 +73,8 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable {
         return of(value.divide(BigInteger.valueOf(2)));
     }
 
-    public OverallValue calculateOverall(DiceAdjustment adjustment) {
-        return OverallValue.of(value.add(adjustment.toBigInteger()));
+    public OverallRollSumValue calculateOverall(DiceAdjustment adjustment) {
+        return OverallRollSumValue.of(value.add(adjustment.toBigInteger()));
     }
 
     public boolean isNaturalCriticalSuccess() {

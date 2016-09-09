@@ -75,6 +75,41 @@ public class RollResultSumTest {
         fail();
     }
 
+    @Test
+    public void should_double_value() {
+        rollResultSum = RollResultSum.builder()
+                .withAdjustment(DiceAdjustment.of(3))
+                .add(NumberOfDices.of(1), SingleRollResult.of(2))
+                .add(NumberOfDices.of(2), SingleRollResult.of(4))
+                .add(NumberOfDices.of(3), SingleRollResult.of(6))
+                .build();
+
+        final RollResultSum doubledResultSum = this.rollResultSum.doubleValue();
+
+        assertThat(doubledResultSum)
+                .isNotNull()
+                .isNotEqualTo(rollResultSum)
+                .extracting(RollResultSum::getOverall)
+                .contains(OverallRollSumValue.of(30));
+    }
+
+    @Test
+    public void should_triple_value() {
+        rollResultSum = RollResultSum.builder()
+                .withAdjustment(DiceAdjustment.of(1))
+                .add(NumberOfDices.of(1), SingleRollResult.of(3))
+                .add(NumberOfDices.of(2), SingleRollResult.of(5))
+                .build();
+
+        final RollResultSum tripledResultSum = this.rollResultSum.tripleValue();
+
+        assertThat(tripledResultSum)
+                .isNotNull()
+                .isNotEqualTo(rollResultSum)
+                .extracting(RollResultSum::getOverall)
+                .contains(OverallRollSumValue.of(27));
+    }
+
     private void assertFormattedIsEqualTo(String expected) {
         assertThat(formatted)
                 .isNotNull()

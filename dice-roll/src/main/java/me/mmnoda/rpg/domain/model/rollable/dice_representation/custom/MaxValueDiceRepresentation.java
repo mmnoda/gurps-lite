@@ -13,7 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationDecorator {
+public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
 
     private MaxValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
