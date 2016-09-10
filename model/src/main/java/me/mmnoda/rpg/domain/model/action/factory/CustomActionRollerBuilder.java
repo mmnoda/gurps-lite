@@ -1,4 +1,4 @@
-package me.mmnoda.rpg.domain.model.action.builder;
+package me.mmnoda.rpg.domain.model.action.factory;
 
 import com.google.common.base.Objects;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
@@ -10,7 +10,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class CustomActionRollerBuilder implements ActionRollerBuilder {
+final class CustomActionRollerBuilder implements ActionRollerBuilder {
 
     private final RollablesFactory rollablesFactory;
     private final CriticalDetermination criticalDetermination;

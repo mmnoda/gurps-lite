@@ -5,6 +5,7 @@ import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentatio
 /**
  *
  */
+@FunctionalInterface
 public interface RollablesFactory {
     DiceRepresentation build3D6();
 }

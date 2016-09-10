@@ -1,4 +1,4 @@
-package me.mmnoda.rpg.domain.model.action.builder;
+package me.mmnoda.rpg.domain.model.action.factory;
 
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDeterminationFactory;

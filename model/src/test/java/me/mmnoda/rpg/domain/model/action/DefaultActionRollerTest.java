@@ -1,7 +1,7 @@
 package me.mmnoda.rpg.domain.model.action;
 
-import me.mmnoda.rpg.domain.model.action.builder.ActionRollerBuilder;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDeterminationFactory;
+import me.mmnoda.rpg.domain.model.action.factory.ActionRollerBuilder;
 import me.mmnoda.rpg.domain.model.action.result.ActionRollResult;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;

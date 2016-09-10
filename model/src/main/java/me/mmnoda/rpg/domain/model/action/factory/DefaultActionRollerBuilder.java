@@ -1,4 +1,4 @@
-package me.mmnoda.rpg.domain.model.action.builder;
+package me.mmnoda.rpg.domain.model.action.factory;
 
 /**
  *

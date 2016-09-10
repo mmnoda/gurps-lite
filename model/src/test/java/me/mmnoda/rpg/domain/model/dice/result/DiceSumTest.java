@@ -18,16 +18,16 @@ public class DiceSumTest {
 
     private String formatted;
 
-    private final Set<DiceSum> noNaturalCriticals;
+    private final Set<DiceSum> noNaturalCritical;
 
     {
-        final Builder<DiceSum> builder = ImmutableSet.<DiceSum>builder();
+        final Builder<DiceSum> builder = ImmutableSet.builder();
 
         for (int count = 5; count <= 17; count ++) {
             builder.add(DiceSum.of(count));
         }
 
-        noNaturalCriticals = builder.build();
+        noNaturalCritical = builder.build();
     }
 
     @Before
@@ -65,7 +65,7 @@ public class DiceSumTest {
 
     @Test
     public void should_identity_no_natural_critical_success() {
-        for (DiceSum noNaturalCritical : noNaturalCriticals) {
+        for (DiceSum noNaturalCritical : this.noNaturalCritical) {
             assertThat(noNaturalCritical.isNaturalCriticalSuccess())
                     .isFalse();
         }
@@ -80,7 +80,7 @@ public class DiceSumTest {
 
     @Test
     public void should_identity_no_natural_critical_miss() {
-        for (DiceSum noNaturalCritical : noNaturalCriticals) {
+        for (DiceSum noNaturalCritical : this.noNaturalCritical) {
             assertThat(noNaturalCritical.isNaturalCriticalMiss())
                     .isFalse();
         }
