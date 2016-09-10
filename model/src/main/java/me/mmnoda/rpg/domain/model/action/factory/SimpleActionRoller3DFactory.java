@@ -3,10 +3,7 @@ package me.mmnoda.rpg.domain.model.action.factory;
 import me.mmnoda.rpg.domain.model.action.ActionRoller;
 import me.mmnoda.rpg.domain.model.action.DefaultActionRoller;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.HighestValueOfNResultDiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.LowestValueOfNResultDiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.MaxValueDiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.MinValueDiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.*;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.DefaultRollablesFactory;
 
 /**
@@ -33,6 +30,14 @@ public enum SimpleActionRoller3DFactory {
         @Override
         public ActionRoller build(CriticalDetermination criticalDetermination) {
             return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> MaxValueDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6()),
+                    criticalDetermination));
+        }
+    },
+
+    AVG_VALUE_ROLL {
+        @Override
+        public ActionRoller build(CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> AvgValueDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     },

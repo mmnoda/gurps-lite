@@ -13,7 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  * Decorator
  */
-public class RolledDiceRepresentation implements DiceRepresentation, Formattable {
+public final class RolledDiceRepresentation implements DiceRepresentation, Formattable {
 
     private final DiceRepresentation diceRepresentation;
     private final RollResultSum rollResultSum;
@@ -53,6 +53,6 @@ public class RolledDiceRepresentation implements DiceRepresentation, Formattable
 
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
-        formatter.format("%s", rollResultSum);
+        formatter.format("%s => %s", diceRepresentation, rollResultSum);
     }
 }

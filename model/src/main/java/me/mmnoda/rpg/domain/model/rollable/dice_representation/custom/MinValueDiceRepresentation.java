@@ -26,7 +26,8 @@ public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverri
     @Override
     protected void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces) {
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(SingleRollResult.of(numberOfDices.minDiceSum().toBigInteger()));
+            builder.add(SingleRollResult.of(numberOfDices.minDiceSum().toBigInteger())
+                    .normalize(numberOfDice));
         }
     }
 
@@ -40,7 +41,7 @@ public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverri
         if (this == o)
             return true;
 
-        if (o instanceof MinValueDiceRepresentation){
+        if (o instanceof MinValueDiceRepresentation) {
             final MinValueDiceRepresentation other = (MinValueDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }

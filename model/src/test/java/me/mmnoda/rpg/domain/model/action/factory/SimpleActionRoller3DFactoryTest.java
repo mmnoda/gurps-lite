@@ -40,6 +40,13 @@ public class SimpleActionRoller3DFactoryTest {
     }
 
     @Test
+    public void should_build_avg_value_action_roller() {
+        factory = AVG_VALUE_ROLL;
+        build(determinationFactory.buildOnlyNatural());
+        assertActionRollerIsNotNull();
+    }
+
+    @Test
     public void should_build_best_of_3_rolls_action_roller() {
         factory = BEST_OF_3_ROLLS;
         build(determinationFactory.buildDefault());
@@ -47,7 +54,7 @@ public class SimpleActionRoller3DFactoryTest {
     }
 
     @Test
-    public void should_build_worts_of_3_rolls_action_roller() {
+    public void should_build_worst_of_3_rolls_action_roller() {
         factory = WORST_OF_3_ROLLS;
         build(determinationFactory.buildOnlyNatural());
         assertActionRollerIsNotNull();

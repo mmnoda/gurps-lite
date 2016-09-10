@@ -13,20 +13,20 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
+public class AvgValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
 
-    private MaxValueDiceRepresentation(DiceRepresentation decorated) {
+    private AvgValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
     }
 
-    public static MaxValueDiceRepresentation of(DiceRepresentation decorated) {
-        return new MaxValueDiceRepresentation(decorated);
+    public static AvgValueDiceRepresentation of(DiceRepresentation decorated) {
+        return new AvgValueDiceRepresentation(decorated);
     }
 
     @Override
     protected void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces) {
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(SingleRollResult.of(numberOfDices.maxDiceSum(numberOfFaces).toBigInteger())
+            builder.add(SingleRollResult.of(numberOfDices.avgDiceSum(numberOfFaces).toBigInteger())
                     .normalize(numberOfDice));
         }
     }
@@ -41,8 +41,8 @@ public final class MaxValueDiceRepresentation extends AbstractDiceRepresentation
         if (this == o)
             return true;
 
-        if (o instanceof MaxValueDiceRepresentation){
-            final MaxValueDiceRepresentation other = (MaxValueDiceRepresentation) o;
+        if (o instanceof AvgValueDiceRepresentation) {
+            final AvgValueDiceRepresentation other = (AvgValueDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }
 
