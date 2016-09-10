@@ -14,7 +14,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public final class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, Formattable {
 
-    private static final Range<DifferenceOfRoll> AT_MOST_10_NEGATIVE = Range.atMost(valueOf(-10));
+    private static final Range<DifferenceOfRoll> AT_MOST_10_NEGATIVE = Range.atMost(of(-10));
 
     private final BigInteger value;
 
@@ -26,7 +26,7 @@ public final class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, For
         return new DifferenceOfRoll(value);
     }
 
-    public static DifferenceOfRoll valueOf(long value) {
+    public static DifferenceOfRoll of(long value) {
         return newDifferenceOfRoll(BigInteger.valueOf(value));
     }
 
@@ -59,7 +59,7 @@ public final class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, For
     }
 
     public boolean isFailedAt10Negative() {
-        return AT_MOST_10_NEGATIVE.equals(this);
+        return AT_MOST_10_NEGATIVE.contains(this);
     }
 
     @Override

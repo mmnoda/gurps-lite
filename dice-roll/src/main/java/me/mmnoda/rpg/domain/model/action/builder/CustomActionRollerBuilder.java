@@ -20,7 +20,7 @@ public class CustomActionRollerBuilder implements ActionRollerBuilder {
         this.criticalDetermination = criticalDetermination;
     }
 
-    public static CustomActionRollerBuilder newCustomActionRollerBuilder(RollablesFactory rollablesFactory, CriticalDetermination criticalDetermination) {
+    public static CustomActionRollerBuilder of(RollablesFactory rollablesFactory, CriticalDetermination criticalDetermination) {
         return new CustomActionRollerBuilder(rollablesFactory, criticalDetermination);
     }
 

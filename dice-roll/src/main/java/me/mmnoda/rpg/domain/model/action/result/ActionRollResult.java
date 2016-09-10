@@ -1,15 +1,19 @@
 package me.mmnoda.rpg.domain.model.action.result;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
+import java.util.Formattable;
+import java.util.Formatter;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 /**
  *
  */
-public class ActionRollResult implements HasIndicatorOfSuccess {
+public class ActionRollResult implements HasIndicatorOfSuccess, Formattable {
 
     private final EffectiveValue effectiveValue;
     private final RollResultSum rollResultSum;
@@ -39,17 +43,20 @@ public class ActionRollResult implements HasIndicatorOfSuccess {
         if (this == obj) {
             return true;
         }
+
         if (obj instanceof ActionRollResult) {
             final ActionRollResult other = (ActionRollResult) obj;
-            return Objects.equal(this.effectiveValue, other.effectiveValue) && Objects.equal(this.criticalStatus, other.criticalStatus) &&
-                    Objects.equal(this.rollResultSum, other.rollResultSum);
+            return Objects.equal(this.effectiveValue, other.effectiveValue)
+                    && Objects.equal(this.criticalStatus, other.criticalStatus)
+                    && Objects.equal(this.rollResultSum, other.rollResultSum);
         }
+
         return false;
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return toStringHelper(this)
                 .add("effectiveValue", effectiveValue)
                 .add("criticalStatus", criticalStatus)
                 .add("rollResultSum", rollResultSum)
@@ -62,8 +69,18 @@ public class ActionRollResult implements HasIndicatorOfSuccess {
         return differenceOfRoll.isSucceeded();
     }
 
+    @Override
+    public DifferenceOfRoll getDifferenceOfRoll() {
+        return differenceOfRoll;
+    }
+
     public boolean isSuccess() {
         return success;
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format("Dice Result: %s %s", rollResultSum, criticalStatus.format(this));
     }
 
     public static class Builder {

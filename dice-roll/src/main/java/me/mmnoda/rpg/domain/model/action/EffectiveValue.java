@@ -8,15 +8,18 @@ import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
-public class EffectiveValue implements Comparable<EffectiveValue>, Formattable {
+public final class EffectiveValue implements Comparable<EffectiveValue>, Formattable {
 
-    private static final Range<EffectiveValue> AT_LEAST_FIFTEEN = Range.atLeast(valueOf(15));
-    private static final Range<EffectiveValue> AT_LEAST_SIXTEEN = Range.atLeast(valueOf(16));
-    private static final Range<EffectiveValue> LESS_THAN_16 = Range.lessThan(valueOf(16));
+    public static final EffectiveValue TEN = of(10);
+
+    private static final Range<EffectiveValue> AT_LEAST_FIFTEEN = Range.atLeast(of(15));
+    private static final Range<EffectiveValue> AT_LEAST_SIXTEEN = Range.atLeast(of(16));
+    private static final Range<EffectiveValue> LESS_THAN_16 = Range.lessThan(of(16));
 
     private final BigInteger value;
 
@@ -24,12 +27,13 @@ public class EffectiveValue implements Comparable<EffectiveValue>, Formattable {
         this.value = value;
     }
 
-    public static EffectiveValue newEffectiveValue(BigInteger value) {
+    public static EffectiveValue of(BigInteger value) {
+        checkNotNull(value);
         return new EffectiveValue(value);
     }
 
-    public static EffectiveValue valueOf(long value) {
-        return newEffectiveValue(BigInteger.valueOf(value));
+    public static EffectiveValue of(long value) {
+        return of(BigInteger.valueOf(value));
     }
 
     @Override

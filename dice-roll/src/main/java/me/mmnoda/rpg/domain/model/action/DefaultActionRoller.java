@@ -9,6 +9,10 @@ import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
+import java.util.Objects;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 /**
  *
  */
@@ -26,8 +30,36 @@ public class DefaultActionRoller implements ActionRoller {
         return new DefaultActionRoller(builder);
     }
 
-    public static DefaultActionRoller OfDefault() {
+    public static DefaultActionRoller ofDefault() {
         return new DefaultActionRoller(DefaultActionRollerBuilder.INSTANCE);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(diceRepresentation, criticalDetermination);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof DefaultActionRoller) {
+            final DefaultActionRoller other = (DefaultActionRoller) obj;
+            return Objects.equals(this.diceRepresentation, other.diceRepresentation)
+                    && Objects.equals(this.criticalDetermination, other.criticalDetermination);
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return toStringHelper(this)
+                .add("diceRepresentation", diceRepresentation)
+                .add("criticalDetermination", criticalDetermination)
+                .toString();
     }
 
     @Override
