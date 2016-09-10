@@ -75,9 +75,9 @@ public class MaxValueDiceRepresentationTest {
                 .isNotNull()
                 .isEqualTo(RollResultSum.builder()
                         .withAdjustment(adjustment)
-                        .add(NumberOfDices.of(1), SingleRollResult.of(6))
-                        .add(NumberOfDices.of(2), SingleRollResult.of(6))
-                        .add(NumberOfDices.of(3), SingleRollResult.of(6))
+                        .add(SingleRollResult.of(6))
+                        .add(SingleRollResult.of(6))
+                        .add(SingleRollResult.of(6))
                         .build());
     }
 

@@ -74,7 +74,7 @@ public class DefaultDiceRepresentation implements DiceRepresentation, Formattabl
                 .withAdjustment(adjustment);
 
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(numberOfDice, rollable.roll());
+            builder.add(rollable.roll(numberOfDice));
         }
         return builder.build();
     }

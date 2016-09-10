@@ -1,20 +1,19 @@
 package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 
-import com.google.common.collect.ImmutableSortedMap;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
-import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.result.DiceSum;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.common.collect.Maps.newTreeMap;
 import static me.mmnoda.rpg.domain.model.dice.result.DiceSum.ZERO;
 
 /**
@@ -22,14 +21,12 @@ import static me.mmnoda.rpg.domain.model.dice.result.DiceSum.ZERO;
  */
 public final class RollResultSum implements Serializable, Formattable, Comparable<RollResultSum> {
 
-    private final SortedMap<NumberOfDices, SingleRollResult> results;
     private final Multiplier multiplier;
     private final DiceSum sum;
     private final DiceAdjustment adjustment;
     private final OverallRollSumValue overall;
 
     private RollResultSum(Builder builder) {
-        this.results = ImmutableSortedMap.copyOf(builder.results);
         this.adjustment = builder.adjustment;
         this.sum = builder.sum;
         this.overall = calculateOverall();
@@ -42,7 +39,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     private RollResultSum(final RollResultSum original, final Multiplier multiplier) {
         this.multiplier = multiplier;
-        this.results = original.results;
         this.sum = original.sum;
         this.adjustment = original.adjustment;
         this.overall = multiplier.calculate(original.calculateOverall());
@@ -85,7 +81,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
     @Override
     public String toString() {
         return toStringHelper(this)
-                .add("results", results)
                 .add("sum", sum)
                 .add("adjustment", adjustment)
                 .add("overall", overall)
@@ -114,27 +109,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     @Override
     public void formatTo(final Formatter formatter, int flags, int width, int precision) {
-        final StringBuilder result = processFormatTo();
-        formatter.format("%s%s = %s", result, adjustment, overall);
-    }
-
-    private StringBuilder processFormatTo() {
-        final StringBuilder result = new StringBuilder().append('(');
-        final Iterator<SingleRollResult> singleRollResultsIterator = results.values().iterator();
-
-        appendSingleResultsToFormat(result, singleRollResultsIterator);
-
-        return result.append(')');
-    }
-
-    private void appendSingleResultsToFormat(StringBuilder result, Iterator<SingleRollResult> singleRollResultsIterator) {
-        while (singleRollResultsIterator.hasNext()) {
-            result.append(String.format("%s", singleRollResultsIterator.next()));
-
-            if (singleRollResultsIterator.hasNext()) {
-                result.append(" + ");
-            }
-        }
+        formatter.format("%s%s = %s", sum, adjustment, overall);
     }
 
     @Override
@@ -150,8 +125,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         private DiceAdjustment adjustment = DiceAdjustment.ZERO;
         private DiceSum sum = ZERO;
 
-        private final SortedMap<NumberOfDices, SingleRollResult> results = newTreeMap();
-
         private Builder() {
         }
 
@@ -160,20 +133,18 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
             return this;
         }
 
-        public Builder add(final NumberOfDices numberOfDices, final SingleRollResult result) {
-            validate(numberOfDices, result);
-            results.put(numberOfDices, result);
+        public Builder add(final SingleRollResult result) {
+            validate(result);
             sum = sum.add(result);
             return this;
         }
 
-        private void validate(NumberOfDices numberOfDices, SingleRollResult result) {
-            checkNotNull(numberOfDices);
+        private void validate(SingleRollResult result) {
             checkNotNull(result);
         }
 
         public RollResultSum build() {
-            checkState(!results.isEmpty(), "there are not results");
+            checkState(sum.isNotZero(), "there are not results");
             return new RollResultSum(this);
         }
     }

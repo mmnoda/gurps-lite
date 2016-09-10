@@ -62,11 +62,11 @@ public class DefaultDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum
                 .builder()
-                .add(NumberOfDices.of(1), SingleRollResult.of(3))
-                .add(NumberOfDices.of(2), SingleRollResult.of(3))
-                .add(NumberOfDices.of(3), SingleRollResult.of(3))
+                .add(SingleRollResult.of(3))
+                .add(SingleRollResult.of(3))
+                .add(SingleRollResult.of(3))
                 .build());
-        verify(singleRollable, times(3)).roll();
+        verify(singleRollable, times(3)).roll(any());
 
     }
 
@@ -77,8 +77,8 @@ public class DefaultDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum
                 .builder()
-                .add(NumberOfDices.of(1), SingleRollResult.of(5))
-                .add(NumberOfDices.of(2), SingleRollResult.of(5))
+                .add(SingleRollResult.of(5))
+                .add(SingleRollResult.of(5))
                 .withAdjustment(DiceAdjustment.of(3))
                 .build());
 
@@ -99,7 +99,7 @@ public class DefaultDiceRepresentationTest {
     }
 
     private void mockSingleRollableReturnRollEqualTo(final SingleRollResult singleRollResult) {
-        when(singleRollable.roll()).thenReturn(singleRollResult);
+        when(singleRollable.roll(any())).thenReturn(singleRollResult);
     }
 
     private void roll() {

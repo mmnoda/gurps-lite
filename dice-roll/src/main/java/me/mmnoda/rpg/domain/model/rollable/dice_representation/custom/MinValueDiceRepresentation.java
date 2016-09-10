@@ -13,7 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
+public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
 
     private MinValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
@@ -26,7 +26,7 @@ public class MinValueDiceRepresentation extends AbstractDiceRepresentationOverri
     @Override
     protected void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces) {
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(numberOfDice, SingleRollResult.of(numberOfDices.minDiceSum().toBigInteger()));
+            builder.add(SingleRollResult.of(numberOfDices.minDiceSum().toBigInteger()));
         }
     }
 

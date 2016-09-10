@@ -1,7 +1,6 @@
 package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
-import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 import org.junit.Test;
 
@@ -20,7 +19,7 @@ public class RollResultSumTest {
     @Test
     public void should_format_one_roll_without_adjustment() {
         rollResultSum = RollResultSum.builder()
-                .add(NumberOfDices.of(1), SingleRollResult.of(2))
+                .add(SingleRollResult.of(2))
                 .build();
 
         format();
@@ -31,9 +30,9 @@ public class RollResultSumTest {
     @Test
     public void should_format_3_roll_without_adjustment() {
         rollResultSum = RollResultSum.builder()
-                .add(NumberOfDices.of(1), SingleRollResult.of(2))
-                .add(NumberOfDices.of(2), SingleRollResult.of(3))
-                .add(NumberOfDices.of(3), SingleRollResult.of(6))
+                .add(SingleRollResult.of(2))
+                .add(SingleRollResult.of(3))
+                .add(SingleRollResult.of(6))
                 .build();
 
         format();
@@ -45,7 +44,7 @@ public class RollResultSumTest {
     public void should_format_one_roll_with_adjustment() {
         rollResultSum = RollResultSum.builder()
                 .withAdjustment(DiceAdjustment.of(3))
-                .add(NumberOfDices.of(1), SingleRollResult.of(4))
+                .add(SingleRollResult.of(4))
                 .build();
 
         format();
@@ -57,10 +56,10 @@ public class RollResultSumTest {
     public void should_format_4_roll_with_adjustment() {
         rollResultSum = RollResultSum.builder()
                 .withAdjustment(DiceAdjustment.of(1))
-                .add(NumberOfDices.of(1), SingleRollResult.of(1))
-                .add(NumberOfDices.of(2), SingleRollResult.of(2))
-                .add(NumberOfDices.of(3), SingleRollResult.of(3))
-                .add(NumberOfDices.of(4), SingleRollResult.of(4))
+                .add(SingleRollResult.of(1))
+                .add(SingleRollResult.of(2))
+                .add(SingleRollResult.of(3))
+                .add(SingleRollResult.of(4))
                 .build();
 
         format();
@@ -79,9 +78,9 @@ public class RollResultSumTest {
     public void should_double_value() {
         rollResultSum = RollResultSum.builder()
                 .withAdjustment(DiceAdjustment.of(3))
-                .add(NumberOfDices.of(1), SingleRollResult.of(2))
-                .add(NumberOfDices.of(2), SingleRollResult.of(4))
-                .add(NumberOfDices.of(3), SingleRollResult.of(6))
+                .add(SingleRollResult.of(2))
+                .add(SingleRollResult.of(4))
+                .add(SingleRollResult.of(6))
                 .build();
 
         final RollResultSum doubledResultSum = this.rollResultSum.doubleValue();
@@ -97,8 +96,8 @@ public class RollResultSumTest {
     public void should_triple_value() {
         rollResultSum = RollResultSum.builder()
                 .withAdjustment(DiceAdjustment.of(1))
-                .add(NumberOfDices.of(1), SingleRollResult.of(3))
-                .add(NumberOfDices.of(2), SingleRollResult.of(5))
+                .add(SingleRollResult.of(3))
+                .add(SingleRollResult.of(5))
                 .build();
 
         final RollResultSum tripledResultSum = this.rollResultSum.tripleValue();

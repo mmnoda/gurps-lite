@@ -76,9 +76,9 @@ public class MinValueDiceRepresentationTest {
                 .isNotNull()
                 .isEqualTo(RollResultSum.builder()
                         .withAdjustment(adjustment)
-                        .add(NumberOfDices.of(1), minSingleResult)
-                        .add(NumberOfDices.of(2), minSingleResult)
-                        .add(NumberOfDices.of(3), minSingleResult)
+                        .add(minSingleResult)
+                        .add(minSingleResult)
+                        .add(minSingleResult)
                         .build());
     }
 

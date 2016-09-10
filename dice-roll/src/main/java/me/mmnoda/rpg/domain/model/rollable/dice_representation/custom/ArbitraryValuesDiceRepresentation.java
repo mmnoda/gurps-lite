@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
+public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
 
     private final List<SingleRollResult> arbitraryRollResults;
     private final SingleRollResult first;
@@ -42,8 +42,7 @@ public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentatio
         deque.addFirst(first);
 
         for (NumberOfDices numberOfDice : numberOfDices) {
-            SingleRollResult expectResult = Optional.ofNullable(deque.pollFirst()).orElse(first);
-            builder.add(numberOfDice, expectResult);
+            builder.add(Optional.ofNullable(deque.pollFirst()).orElse(first).normalize(numberOfDice));
         }
     }
 

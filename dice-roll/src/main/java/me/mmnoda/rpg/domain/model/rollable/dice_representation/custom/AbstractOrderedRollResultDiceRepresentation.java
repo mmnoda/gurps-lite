@@ -26,13 +26,13 @@ abstract class AbstractOrderedRollResultDiceRepresentation extends AbstractDiceR
     public RollResultSum roll() {
         final SortedSet<RollResultSum> rolls = Sets.newTreeSet();
 
-        for (int roll = 1; roll <= numberOfRolls; roll++) {
+        for (int rollNumber = 1; rollNumber <= numberOfRolls; rollNumber++) {
             rolls.add(decorated.roll());
         }
 
         return getSelectedRoll(ImmutableSortedSet.copyOf(rolls));
     }
 
-    protected abstract RollResultSum getSelectedRoll(ImmutableSortedSet<RollResultSum> rollResultSa);
+    protected abstract RollResultSum getSelectedRoll(SortedSet<RollResultSum> results);
 
 }

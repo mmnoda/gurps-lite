@@ -10,9 +10,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-abstract class AbstractDiceRepresentationOverrideRollDecorator extends AbstractDiceRepresentationDecorator {
+abstract class AbstractDiceRepresentationOverrideRollResult extends AbstractDiceRepresentationDecorator {
 
-    AbstractDiceRepresentationOverrideRollDecorator(DiceRepresentation decorated) {
+    AbstractDiceRepresentationOverrideRollResult(DiceRepresentation decorated) {
         super(decorated);
         checkNotNull(decorated);
     }

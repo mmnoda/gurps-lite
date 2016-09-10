@@ -56,9 +56,9 @@ public class ArbitraryValuesDiceRepresentationTest {
 
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), first)
-                .add(NumberOfDices.of(3), first)
+                .add(first)
+                .add(first)
+                .add(first)
                 .build());
 
         verifySingleRollableReturn6Faces();
@@ -72,9 +72,9 @@ public class ArbitraryValuesDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), second)
-                .add(NumberOfDices.of(3), third)
+                .add(first)
+                .add(second)
+                .add(third)
                 .build());
 
         verifySingleRollableReturn6Faces();
@@ -89,9 +89,9 @@ public class ArbitraryValuesDiceRepresentationTest {
 
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), second)
-                .add(NumberOfDices.of(3), first)
+                .add(first)
+                .add(second)
+                .add(first)
                 .build());
 
         verifySingleRollableReturn6Faces();
@@ -106,9 +106,9 @@ public class ArbitraryValuesDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), first)
-                .add(NumberOfDices.of(3), first)
+                .add(first)
+                .add(first)
+                .add(first)
                 .build());
         verifySingleRollableReturn6Faces();
     }
@@ -122,9 +122,9 @@ public class ArbitraryValuesDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), second)
-                .add(NumberOfDices.of(3), first)
+                .add(first)
+                .add(second)
+                .add(first)
                 .build());
         verifySingleRollableReturn6Faces();
     }
@@ -138,9 +138,9 @@ public class ArbitraryValuesDiceRepresentationTest {
         roll();
         assertRollResultSumIsEqualTo(RollResultSum.builder()
                 .withAdjustment(adjustment)
-                .add(NumberOfDices.of(1), first)
-                .add(NumberOfDices.of(2), second)
-                .add(NumberOfDices.of(3), third)
+                .add(first)
+                .add(second)
+                .add(third)
                 .build());
         verifySingleRollableReturn6Faces();
     }

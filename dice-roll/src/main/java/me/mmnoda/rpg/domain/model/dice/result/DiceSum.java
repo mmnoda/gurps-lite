@@ -1,13 +1,12 @@
 package me.mmnoda.rpg.domain.model.dice.result;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.OverallRollSumValue;
 
 import java.math.BigInteger;
-import java.util.Formattable;
-import java.util.Formatter;
-import java.util.Objects;
+import java.util.*;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -15,17 +14,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
-public final class DiceSum implements Comparable<DiceSum>, Formattable {
+public final class DiceSum implements Comparable<DiceSum>, Formattable, Iterable<SingleRollResult> {
 
-    public static final DiceSum ZERO = of(0);
+    public static final DiceSum ZERO = new DiceSum(BigInteger.ZERO);
 
     private static final Range<DiceSum> NATURAL_CRITICAL_SUCCESS = Range.closed(of(3), of(4));
     private static final DiceSum NATURAL_CRITICAL_MISS = of(18);
 
+    private final List<SingleRollResult> results;
+
     private final BigInteger value;
 
-    private DiceSum(BigInteger value) {
+    private DiceSum(final BigInteger value) {
         this.value = value;
+        this.results = ImmutableList.of();
+    }
+
+    private DiceSum(final SingleRollResult singleRollResult, final DiceSum diceSum) {
+        this.value = diceSum.value.add(singleRollResult.toBigInteger());
+        this.results = ImmutableList.<SingleRollResult>builder()
+                .addAll(diceSum.results)
+                .add(singleRollResult)
+                .build();
     }
 
     public static DiceSum of(final BigInteger value) {
@@ -35,6 +45,10 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable {
 
     public static DiceSum of(long value) {
         return of(BigInteger.valueOf(value));
+    }
+
+    public static DiceSum of(final SingleRollResult singleRollResult, final DiceSum diceSum) {
+        return new DiceSum(singleRollResult, diceSum);
     }
 
     @Override
@@ -58,6 +72,7 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable {
     public String toString() {
         return toStringHelper(this)
                 .add("value", value)
+                .add("results", results)
                 .toString();
     }
 
@@ -66,7 +81,7 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable {
     }
 
     public DiceSum add(final SingleRollResult rollResult) {
-        return of(value.add(rollResult.toBigInteger()));
+        return of(rollResult, this);
     }
 
     public DiceSum half(){
@@ -85,13 +100,41 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable {
         return NATURAL_CRITICAL_MISS.equals(this);
     }
 
+    public boolean isNotZero() {
+        return value.signum() != 0;
+    }
+
+    @Override
+    public Iterator<SingleRollResult> iterator() {
+        return results.iterator();
+    }
+
     @Override
     public int compareTo(DiceSum o) {
         return value.compareTo(o.value);
     }
 
     @Override
-    public void formatTo(Formatter formatter, int flags, int width, int precision) {
-        formatter.format(value.toString());
+    public void formatTo(final Formatter formatter, int flags, int width, int precision) {
+        formatter.format(results.isEmpty() ? value.toString() : processFormatTo());
+    }
+
+    private String processFormatTo() {
+        final StringBuilder result = new StringBuilder().append('(');
+        final Iterator<SingleRollResult> singleRollResultsIterator = iterator();
+
+        appendSingleResultsToFormat(result, singleRollResultsIterator);
+
+        return result.append(')').toString();
+    }
+
+    private void appendSingleResultsToFormat(StringBuilder result, Iterator<SingleRollResult> singleRollResultsIterator) {
+        while (singleRollResultsIterator.hasNext()) {
+            result.append(String.format("%s", singleRollResultsIterator.next()));
+
+            if (singleRollResultsIterator.hasNext()) {
+                result.append(" + ");
+            }
+        }
     }
 }

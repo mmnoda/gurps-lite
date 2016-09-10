@@ -16,9 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
-    public static final NumberOfDices THREE = newNumberOfDices(BigInteger.valueOf(3));
-
     private static final NumberOfDices ZERO = newNumberOfDices(BigInteger.ZERO);
+    public static final NumberOfDices ONE = newNumberOfDices(BigInteger.ONE);
+    public static final NumberOfDices THREE = newNumberOfDices(BigInteger.valueOf(3));
 
     private final BigInteger quantity;
 

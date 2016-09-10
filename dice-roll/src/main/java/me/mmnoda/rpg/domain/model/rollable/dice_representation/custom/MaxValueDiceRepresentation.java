@@ -13,7 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollDecorator {
+public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
 
     private MaxValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);
@@ -26,7 +26,7 @@ public final class MaxValueDiceRepresentation extends AbstractDiceRepresentation
     @Override
     protected void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces) {
         for (NumberOfDices numberOfDice : numberOfDices) {
-            builder.add(numberOfDice, SingleRollResult.of(numberOfDices.maxDiceSum(numberOfFaces).toBigInteger()));
+            builder.add(SingleRollResult.of(numberOfDices.maxDiceSum(numberOfFaces).toBigInteger()));
         }
     }
 
