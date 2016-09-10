@@ -1,7 +1,7 @@
 package me.mmnoda.rpg.domain.model.action.builder;
 
 import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
-import me.mmnoda.rpg.domain.model.action.critical.DefaultCriticalDetermination;
+import me.mmnoda.rpg.domain.model.action.critical.CriticalDeterminationFactory;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.DefaultRollablesFactory;
 
@@ -15,7 +15,7 @@ public interface ActionRollerBuilder {
     }
 
     default CriticalDetermination getCriticalDetermination() {
-        return DefaultCriticalDetermination.TO_FIND_OUT;
+        return CriticalDeterminationFactory.INSTANCE.buildDefault();
     }
 
 }

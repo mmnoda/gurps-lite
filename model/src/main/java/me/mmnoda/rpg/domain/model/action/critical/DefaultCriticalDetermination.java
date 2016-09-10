@@ -7,8 +7,7 @@ import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResult
 /**
  *
  */
-// TODO implement template method
-public enum DefaultCriticalDetermination implements CriticalDetermination {
+enum DefaultCriticalDetermination implements CriticalDetermination {
 
     TO_FIND_OUT {
         @Override
