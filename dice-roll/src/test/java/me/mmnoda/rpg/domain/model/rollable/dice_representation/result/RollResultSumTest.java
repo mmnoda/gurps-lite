@@ -83,13 +83,10 @@ public class RollResultSumTest {
                 .add(SingleRollResult.of(6))
                 .build();
 
-        final RollResultSum doubledResultSum = this.rollResultSum.doubleValue();
-
-        assertThat(doubledResultSum)
-                .isNotNull()
-                .isNotEqualTo(rollResultSum)
-                .extracting(RollResultSum::getOverall)
-                .contains(OverallRollSumValue.of(30));
+        doubleValue();
+        format();
+        assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue.of(30));
+        assertFormattedIsEqualTo("[(2 + 4 + 6) + 3] * 2 = 30");
     }
 
     @Test
@@ -100,13 +97,25 @@ public class RollResultSumTest {
                 .add(SingleRollResult.of(5))
                 .build();
 
-        final RollResultSum tripledResultSum = this.rollResultSum.tripleValue();
+        tripleValue();
+        format();
+        assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue.of(27));
+        assertFormattedIsEqualTo("[(3 + 5) + 1] * 3 = 27");
+    }
 
-        assertThat(tripledResultSum)
+    private void assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue of) {
+        assertThat(rollResultSum)
                 .isNotNull()
-                .isNotEqualTo(rollResultSum)
                 .extracting(RollResultSum::getOverall)
-                .contains(OverallRollSumValue.of(27));
+                .contains(of);
+    }
+
+    private void tripleValue() {
+        rollResultSum = this.rollResultSum.tripleValue();
+    }
+
+    private void doubleValue() {
+        rollResultSum = this.rollResultSum.doubleValue();
     }
 
     private void assertFormattedIsEqualTo(String expected) {

@@ -12,8 +12,7 @@ import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.*;
 import static me.mmnoda.rpg.domain.model.dice.result.DiceSum.ZERO;
 
 /**
@@ -33,15 +32,39 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         this.multiplier = Multiplier.NONE;
     }
 
-    private OverallRollSumValue calculateOverall() {
-        return sum.calculateOverall(adjustment);
-    }
-
-    private RollResultSum(final RollResultSum original, final Multiplier multiplier) {
-        this.multiplier = multiplier;
+    private RollResultSum(final RollResultSum original, final Multiplier newMultiplier) {
+        this.multiplier = newMultiplier;
         this.sum = original.sum;
         this.adjustment = original.adjustment;
-        this.overall = multiplier.calculate(original.calculateOverall());
+        this.overall = newMultiplier.calculate(original.calculateOverall());
+    }
+
+    private RollResultSum(DiceAdjustment adjustment, SingleRollResult... results) {
+        checkArgument(results.length > 0);
+        DiceSum sum = ZERO;
+        for (SingleRollResult result : results) {
+            sum = sum.add(result);
+        }
+        this.sum = sum;
+        this.multiplier = Multiplier.NONE;
+        this.adjustment = adjustment;
+        this.overall = calculateOverall();
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static RollResultSum of(SingleRollResult... results) {
+        return new RollResultSum(DiceAdjustment.ZERO, results);
+    }
+
+    public static RollResultSum of(DiceAdjustment adjustment, SingleRollResult... results) {
+        return new RollResultSum(adjustment, results);
+    }
+
+    private OverallRollSumValue calculateOverall() {
+        return sum.calculateOverall(adjustment);
     }
 
     public RollResultSum doubleValue() {
@@ -50,10 +73,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     public RollResultSum tripleValue() {
         return new RollResultSum(this, Multiplier.TRIPLE);
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     @Override
@@ -109,7 +128,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     @Override
     public void formatTo(final Formatter formatter, int flags, int width, int precision) {
-        formatter.format("%s%s = %s", sum, adjustment, overall);
+        formatter.format(multiplier.format, sum, adjustment, overall);
     }
 
     @Override
@@ -144,34 +163,42 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         }
 
         public RollResultSum build() {
-            checkState(sum.isNotZero(), "there are not results");
+            checkState(sum.isNotZero(), "There are not results");
             return new RollResultSum(this);
         }
     }
 
     private enum Multiplier {
 
-        NONE {
+        NONE("%s%s = %s") {
             @Override
             OverallRollSumValue calculate(OverallRollSumValue overallValue) {
                 return overallValue;
             }
         },
 
-        DOUBLE {
+        DOUBLE("[%s%s] * 2 = %s") {
             @Override
             OverallRollSumValue calculate(OverallRollSumValue overallValue) {
                 return overallValue.doubleValue();
             }
         },
 
-        TRIPLE {
+        TRIPLE("[%s%s] * 3 = %s") {
             @Override
             OverallRollSumValue calculate(OverallRollSumValue overallValue) {
                 return overallValue.tripleValue();
             }
         };
 
+        private final String format;
+
+        Multiplier(final String format) {
+            this.format = format;
+        }
+
         abstract OverallRollSumValue calculate(final OverallRollSumValue overallValue);
+
+
     }
 }

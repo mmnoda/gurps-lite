@@ -11,14 +11,14 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class LowerValueOfNResultDiceRepresentation extends AbstractOrderedRollResultDiceRepresentation {
+public class LowestValueOfNResultDiceRepresentation extends AbstractOrderedRollResultDiceRepresentation {
 
-    private LowerValueOfNResultDiceRepresentation(DiceRepresentation decorated, int numberOfRolls) {
+    private LowestValueOfNResultDiceRepresentation(DiceRepresentation decorated, int numberOfRolls) {
         super(decorated, numberOfRolls);
     }
 
-    public static LowerValueOfNResultDiceRepresentation of(DiceRepresentation decorated, int numberOfRolls) {
-        return new LowerValueOfNResultDiceRepresentation(decorated, numberOfRolls);
+    public static LowestValueOfNResultDiceRepresentation of(DiceRepresentation decorated, int numberOfRolls) {
+        return new LowestValueOfNResultDiceRepresentation(decorated, numberOfRolls);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class LowerValueOfNResultDiceRepresentation extends AbstractOrderedRollRe
         if (this == o)
             return true;
 
-        if (o instanceof LowerValueOfNResultDiceRepresentation){
-            final LowerValueOfNResultDiceRepresentation other = (LowerValueOfNResultDiceRepresentation) o;
+        if (o instanceof LowestValueOfNResultDiceRepresentation){
+            final LowestValueOfNResultDiceRepresentation other = (LowestValueOfNResultDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }
 

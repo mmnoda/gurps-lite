@@ -42,17 +42,19 @@ public final class SingleRollResult implements Serializable, Formattable, Compar
     }
 
     public static SingleRollResult of(final NumberOfFaces numberOfFaces, final BigInteger value) {
-        final NumberOfDices one = NumberOfDices.ONE;
-        validate(one, numberOfFaces, value);
-        return new SingleRollResult(one, numberOfFaces, value);
-    }
-
-    public static SingleRollResult of(final BigInteger value) {
-        return of(NumberOfFaces._6, value);
+        return of(NumberOfDices.ONE, numberOfFaces, value);
     }
 
     public static SingleRollResult of(final NumberOfFaces numberOfFaces, final int value) {
         return of(numberOfFaces, BigInteger.valueOf(value));
+    }
+
+    public static SingleRollResult of(final NumberOfDices numberOfDices, final int value) {
+        return of(numberOfDices, NumberOfFaces._6, BigInteger.valueOf(value));
+    }
+
+    public static SingleRollResult of(final BigInteger value) {
+        return of(NumberOfFaces._6, value);
     }
 
     public static SingleRollResult of(final int value) {
