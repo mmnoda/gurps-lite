@@ -1,10 +1,10 @@
-package me.mmnoda.rpg.domain.model.action.factory;
+package me.mmnoda.rpg.domain.model.rollable.damage_representation;
 
 /*
  * #%L
  * model
  * %%
- * Copyright (C) 2015 - 2016 Márcio Noda
+ * Copyright (C) 2016 Márcio Noda
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,22 +20,15 @@ package me.mmnoda.rpg.domain.model.action.factory;
  * #L%
  */
 
-import me.mmnoda.rpg.domain.model.action.critical.determination.CriticalDetermination;
-import me.mmnoda.rpg.domain.model.action.critical.determination.CriticalDeterminationFactory;
+import me.mmnoda.rpg.domain.model.rollable.damage_representation.result.RollDamageResult;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.DefaultRollablesFactory;
 
 /**
  *
  */
-public interface ActionRollerBuilder {
+public interface DamageDiceRepresentation {
 
-    default DiceRepresentation getRollables() {
-        return DefaultRollablesFactory.INSTANCE.build3D6();
-    }
+    RollDamageResult roll();
 
-    default CriticalDetermination getCriticalDetermination() {
-        return CriticalDeterminationFactory.INSTANCE.buildDefault();
-    }
-
+    RollDamageResult roll(final DiceRepresentation replacedDiceRepresentation);
 }

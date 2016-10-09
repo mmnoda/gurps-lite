@@ -20,8 +20,8 @@ package me.mmnoda.rpg.domain.model.action;
  * #L%
  */
 
-import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
+import me.mmnoda.rpg.domain.model.action.critical.determination.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.action.factory.ActionRollerBuilder;
 import me.mmnoda.rpg.domain.model.action.factory.DefaultActionRollerBuilder;
 import me.mmnoda.rpg.domain.model.action.result.ActionRollResult;

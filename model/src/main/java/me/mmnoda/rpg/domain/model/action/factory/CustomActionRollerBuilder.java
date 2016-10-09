@@ -21,7 +21,7 @@ package me.mmnoda.rpg.domain.model.action.factory;
  */
 
 import com.google.common.base.Objects;
-import me.mmnoda.rpg.domain.model.action.critical.CriticalDetermination;
+import me.mmnoda.rpg.domain.model.action.critical.determination.CriticalDetermination;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.factory.RollablesFactory;
 

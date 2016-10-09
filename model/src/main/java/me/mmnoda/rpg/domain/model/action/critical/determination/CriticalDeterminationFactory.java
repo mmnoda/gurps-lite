@@ -1,4 +1,4 @@
-package me.mmnoda.rpg.domain.model.action.critical;
+package me.mmnoda.rpg.domain.model.action.critical.determination;
 
 /*
  * #%L
@@ -20,14 +20,18 @@ package me.mmnoda.rpg.domain.model.action.critical;
  * #L%
  */
 
-import me.mmnoda.rpg.domain.model.action.EffectiveValue;
-import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
-
 /**
  *
  */
-public interface CriticalDetermination {
+public enum CriticalDeterminationFactory {
 
-    CriticalStatus determine(EffectiveValue effectiveValue, RollResultSum rollResultSum, DifferenceOfRoll differenceOfRoll);
+    INSTANCE;
+
+    public final CriticalDetermination buildDefault() {
+        return DefaultCriticalDetermination.TO_FIND_OUT;
+    }
+
+    public final CriticalDetermination buildOnlyNatural() {
+        return OnlyNaturalCriticalDetermination.TO_FIND_OUT;
+    }
 }

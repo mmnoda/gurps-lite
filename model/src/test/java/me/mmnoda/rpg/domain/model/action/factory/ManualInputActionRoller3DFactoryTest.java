@@ -22,7 +22,7 @@ package me.mmnoda.rpg.domain.model.action.factory;
 
 import me.mmnoda.rpg.domain.model.action.ActionRoller;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
-import me.mmnoda.rpg.domain.model.action.critical.CriticalDeterminationFactory;
+import me.mmnoda.rpg.domain.model.action.critical.determination.CriticalDeterminationFactory;
 import me.mmnoda.rpg.domain.model.action.result.ActionRollResult;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 import org.junit.Test;

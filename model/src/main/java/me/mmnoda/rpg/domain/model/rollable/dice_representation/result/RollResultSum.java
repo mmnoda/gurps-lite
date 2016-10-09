@@ -22,6 +22,8 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
+import me.mmnoda.rpg.domain.model.damage.Damage;
+import me.mmnoda.rpg.domain.model.damage.DamageType;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.dice.result.DiceSum;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
@@ -65,6 +67,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         for (SingleRollResult result : results) {
             sum = sum.add(result);
         }
+
         this.sum = sum;
         this.multiplier = Multiplier.NONE;
         this.adjustment = adjustment;
@@ -85,14 +88,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
 
     private OverallRollSumValue calculateOverall() {
         return sum.calculateOverall(adjustment);
-    }
-
-    public RollResultSum doubleValue() {
-        return new RollResultSum(this, Multiplier.DOUBLE);
-    }
-
-    public RollResultSum tripleValue() {
-        return new RollResultSum(this, Multiplier.TRIPLE);
     }
 
     @Override
@@ -126,6 +121,16 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
                 .toString();
     }
 
+    public RollResultSum doubleValue() {
+        checkState(multiplier == Multiplier.NONE);
+        return new RollResultSum(this, Multiplier.DOUBLE);
+    }
+
+    public RollResultSum tripleValue() {
+        checkState(multiplier == Multiplier.NONE);
+        return new RollResultSum(this, Multiplier.TRIPLE);
+    }
+
     public DifferenceOfRoll calculateDifference(EffectiveValue effectiveValue) {
         return overall.calculateDifference(effectiveValue);
     }
@@ -156,6 +161,10 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         return this.overall.compareTo(o.overall);
     }
 
+    public Damage toDamage(final DamageType type) {
+        return overall.toDamage(type);
+    }
+
     public OverallRollSumValue getOverall() {
         return overall;
     }
@@ -164,8 +173,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         private DiceAdjustment adjustment = DiceAdjustment.ZERO;
         private DiceSum sum = ZERO;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder withAdjustment(final DiceAdjustment adjustment) {
             this.adjustment = adjustment;
@@ -183,7 +191,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         }
 
         public RollResultSum build() {
-            checkState(sum.isNotZero(), "There are not results");
+            checkState(sum.isNotZero(), "There are no results");
             return new RollResultSum(this);
         }
     }
@@ -218,7 +226,6 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         }
 
         abstract OverallRollSumValue calculate(final OverallRollSumValue overallValue);
-
 
     }
 }

@@ -23,6 +23,8 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 import com.google.common.collect.Range;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
+import me.mmnoda.rpg.domain.model.damage.Damage;
+import me.mmnoda.rpg.domain.model.damage.DamageType;
 
 import java.math.BigInteger;
 import java.util.Formattable;
@@ -79,24 +81,28 @@ public final class OverallRollSumValue implements Formattable, Comparable<Overal
                 .toString();
     }
 
-    public OverallRollSumValue doubleValue() {
+    OverallRollSumValue doubleValue() {
         return of(value.multiply(BigInteger.valueOf(2)));
     }
 
-    public OverallRollSumValue tripleValue() {
+    OverallRollSumValue tripleValue() {
         return of(value.multiply(BigInteger.valueOf(3)));
     }
 
-    public boolean isCriticalMiss(EffectiveValue effectiveValue) {
+    Damage toDamage(final DamageType type) {
+        return Damage.of(value, type);
+    }
+
+    boolean isCriticalMiss(EffectiveValue effectiveValue) {
         return effectiveValue.isLessThan16() && PROBABLE_CRITICAL_MISS.equals(this);
     }
 
-    public boolean isCriticalSuccess(EffectiveValue effectiveValue) {
+    boolean isCriticalSuccess(EffectiveValue effectiveValue) {
         return PROBABLE_CRITICAL_SUCCESS.contains(this) && (effectiveValue.isGreaterEquals16() ||
                 (effectiveValue.isGreaterEquals15() && FIVE.equals(this)));
     }
 
-    public DifferenceOfRoll calculateDifference(EffectiveValue effectiveValue) {
+    DifferenceOfRoll calculateDifference(EffectiveValue effectiveValue) {
         return newDifferenceOfRoll(effectiveValue.toBigInteger().subtract(value));
     }
 
