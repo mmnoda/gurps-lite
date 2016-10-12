@@ -28,6 +28,8 @@ import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Objects;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 /**
  *
  */
@@ -60,6 +62,14 @@ public class RollDamageResult implements Formattable {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return toStringHelper(this)
+                .add("rollResultSum", rollResultSum)
+                .add("damageType", damageType)
+                .toString();
     }
 
     public static RollDamageResult of(RollResultSum rollResultSum, DamageType damageType) {

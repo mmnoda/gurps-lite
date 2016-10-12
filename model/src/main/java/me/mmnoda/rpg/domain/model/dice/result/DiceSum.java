@@ -109,6 +109,7 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable, Iterable
     }
 
     public OverallRollSumValue calculateOverall(DiceAdjustment adjustment) {
+        checkNotNull(adjustment);
         return OverallRollSumValue.of(value.add(adjustment.toBigInteger()));
     }
 

@@ -21,6 +21,8 @@ package me.mmnoda.rpg.domain.model.damage;
  */
 
 import java.math.BigInteger;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -29,7 +31,7 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  *
  */
-public class Damage {
+public class Damage implements Formattable, Comparable<Damage> {
 
     private final BigInteger value;
 
@@ -47,13 +49,17 @@ public class Damage {
         return new Damage(value, type, false);
     }
 
+    static Damage of(long value, DamageType type) {
+        return new Damage(BigInteger.valueOf(value), type, false);
+    }
+
     static Damage ofFinalValue(BigInteger value, DamageType type) {
         return new Damage(value, type, true);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, type, finalValue);
+        return Objects.hash(value, type);
     }
 
     @Override
@@ -65,8 +71,7 @@ public class Damage {
         if (obj instanceof Damage) {
             final Damage other = (Damage) obj;
             return Objects.equals(this.value, other.value)
-                    && Objects.equals(this.type, other.type)
-                    && Objects.equals(this.finalValue, other.finalValue);
+                    && Objects.equals(this.type, other.type);
         }
 
         return false;
@@ -77,6 +82,7 @@ public class Damage {
         return toStringHelper(this)
                 .add("value", value)
                 .add("type", type)
+                .add("finalValue", finalValue)
                 .toString();
     }
 
@@ -89,4 +95,13 @@ public class Damage {
         return value;
     }
 
+    @Override
+    public int compareTo(Damage o) {
+        return value.compareTo(o.value);
+    }
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format("%s [%s]", value, type);
+    }
 }

@@ -28,6 +28,8 @@ import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentatio
 import java.util.Formattable;
 import java.util.Formatter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  *
  */
@@ -36,6 +38,7 @@ abstract class AbstractDiceRepresentationDecorator implements DiceRepresentation
     protected final DiceRepresentation decorated;
 
     AbstractDiceRepresentationDecorator(DiceRepresentation decorated) {
+        checkNotNull(decorated);
         this.decorated = decorated;
     }
 

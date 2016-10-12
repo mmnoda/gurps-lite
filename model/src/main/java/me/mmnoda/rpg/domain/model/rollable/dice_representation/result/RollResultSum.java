@@ -176,6 +176,7 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         private Builder() {}
 
         public Builder withAdjustment(final DiceAdjustment adjustment) {
+            checkNotNull(adjustment);
             this.adjustment = adjustment;
             return this;
         }

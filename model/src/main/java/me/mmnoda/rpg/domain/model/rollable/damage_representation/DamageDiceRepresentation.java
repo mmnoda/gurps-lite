@@ -20,8 +20,8 @@ package me.mmnoda.rpg.domain.model.rollable.damage_representation;
  * #L%
  */
 
+import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.rpg.domain.model.rollable.damage_representation.result.RollDamageResult;
-import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 
 /**
  *
@@ -30,5 +30,16 @@ public interface DamageDiceRepresentation {
 
     RollDamageResult roll();
 
-    RollDamageResult roll(final DiceRepresentation replacedDiceRepresentation);
+    RollDamageResult rollMaxValue();
+
+    RollDamageResult rollMinValue();
+
+    RollDamageResult rollAvgMinValue();
+
+    RollDamageResult rollHighestValueOf3();
+
+    RollDamageResult rollLowestValueOf3();
+
+    RollDamageResult rollManualInput(final SingleRollResult first, final SingleRollResult... expectedResults);
+
 }

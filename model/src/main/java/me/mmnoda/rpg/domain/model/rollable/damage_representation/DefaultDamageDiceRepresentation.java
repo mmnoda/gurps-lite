@@ -21,8 +21,11 @@ package me.mmnoda.rpg.domain.model.rollable.damage_representation;
  */
 
 import me.mmnoda.rpg.domain.model.damage.DamageType;
+import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.rpg.domain.model.rollable.damage_representation.result.RollDamageResult;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.custom.*;
+import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import java.util.Formattable;
 import java.util.Formatter;
@@ -78,12 +81,43 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
 
     @Override
     public RollDamageResult roll() {
-        return RollDamageResult.of(diceRepresentation.roll(), damageType);
+        return damageResult(diceRepresentation.roll());
     }
 
     @Override
-    public RollDamageResult roll(final DiceRepresentation replacedDiceRepresentation) {
-        return RollDamageResult.of(replacedDiceRepresentation.roll(), damageType);
+    public RollDamageResult rollMaxValue() {
+        return damageResult(MaxValueDiceRepresentation.of(diceRepresentation).roll());
+    }
+
+    @Override
+    public RollDamageResult rollMinValue() {
+        return damageResult(MinValueDiceRepresentation.of(diceRepresentation).roll());
+    }
+
+    @Override
+    public RollDamageResult rollAvgMinValue() {
+        return damageResult(AvgValueDiceRepresentation.of(diceRepresentation).roll());
+    }
+
+    @Override
+    public RollDamageResult rollHighestValueOf3() {
+        return damageResult(HighestValueOfNResultDiceRepresentation.of(diceRepresentation, 3).roll());
+
+    }
+
+    @Override
+    public RollDamageResult rollLowestValueOf3() {
+        return damageResult(LowestValueOfNResultDiceRepresentation.of(diceRepresentation, 3).roll());
+    }
+
+    @Override
+    public RollDamageResult rollManualInput(SingleRollResult first, SingleRollResult... expectedResults) {
+        return damageResult(ArbitraryValuesDiceRepresentation.of(diceRepresentation, first, expectedResults).roll());
+
+    }
+
+    private RollDamageResult damageResult(RollResultSum roll) {
+        return RollDamageResult.of(roll, damageType);
     }
 
     @Override

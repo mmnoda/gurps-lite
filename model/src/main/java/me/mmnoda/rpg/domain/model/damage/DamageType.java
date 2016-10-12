@@ -74,7 +74,7 @@ public enum DamageType implements Formattable {
     }
 
     Damage calculate(final Damage damage) {
-        return multiplier.multiply(damage.toBigInteger(), this);
+        return Damage.ofFinalValue(multiplier.multiply(damage.toBigInteger()), this);
     }
 
     @Override

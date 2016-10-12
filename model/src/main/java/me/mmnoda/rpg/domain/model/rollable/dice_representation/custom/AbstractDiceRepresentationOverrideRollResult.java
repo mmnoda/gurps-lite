@@ -20,33 +20,38 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation.custom;
  * #L%
  */
 
+import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.NumberOfFaces;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
 abstract class AbstractDiceRepresentationOverrideRollResult extends AbstractDiceRepresentationDecorator {
 
+    private final NumberOfDices numberOfDices;
+    private final DiceAdjustment diceAdjustment;
+    private final NumberOfFaces numberOfFaces;
+
     AbstractDiceRepresentationOverrideRollResult(DiceRepresentation decorated) {
         super(decorated);
-        checkNotNull(decorated);
+        numberOfDices = decorated.getNumberOfDices();
+        numberOfFaces = decorated.getNumberOfFaces();
+        diceAdjustment = decorated.getDiceAdjustment();
     }
 
     public final RollResultSum roll() {
         final RollResultSum.Builder builder = getBuilder();
-        customizeRoll(builder, getNumberOfDices(), getNumberOfFaces());
+        customizeRoll(builder, numberOfDices, numberOfFaces);
         return builder.build();
     }
 
     private RollResultSum.Builder getBuilder() {
         return RollResultSum
                 .builder()
-                .withAdjustment(this.getDiceAdjustment());
+                .withAdjustment(diceAdjustment);
     }
 
     protected abstract void customizeRoll(RollResultSum.Builder builder, NumberOfDices numberOfDices, NumberOfFaces numberOfFaces);

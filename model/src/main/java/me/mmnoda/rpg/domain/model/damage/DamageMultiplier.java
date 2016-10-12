@@ -26,7 +26,7 @@ import java.math.BigInteger;
 /**
  *
  */
-public enum DamageMultiplier {
+enum DamageMultiplier {
 
     NONE(BigDecimal.ONE),
 
@@ -42,8 +42,8 @@ public enum DamageMultiplier {
         this.multiplier = multiplier;
     }
 
-    Damage multiply(final BigInteger damageValue, final DamageType type) {
-        return Damage.ofFinalValue(damageValue.multiply(multiplier.toBigInteger()), type);
+    BigInteger multiply(final BigInteger damageValue) {
+        return multiplier.multiply(new BigDecimal(damageValue)).toBigInteger();
     }
 
 }
