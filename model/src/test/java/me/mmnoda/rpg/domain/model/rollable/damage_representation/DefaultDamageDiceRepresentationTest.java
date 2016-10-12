@@ -85,7 +85,7 @@ public class DefaultDamageDiceRepresentationTest {
     }
 
     @Test
-    public void should_roll_min_value_for_all_damage_ypes() {
+    public void should_roll_min_value_for_all_damage_types() {
         final RollResultSum minRollResultSum = RollResultSum.of(SingleRollResult.of(1), SingleRollResult.of(1), SingleRollResult.of(1));
         for (DamageType type : types) {
             buildDamageDiceRepresentation(type);

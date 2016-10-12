@@ -39,22 +39,24 @@ public class Damage implements Formattable, Comparable<Damage> {
 
     private final boolean finalValue;
 
-    private Damage(BigInteger value, DamageType type, boolean finalValue) {
+    private Damage(BigInteger value, DamageType type) {
         this.value = value;
         this.type = type;
-        this.finalValue = finalValue;
+        this.finalValue = false;
+    }
+
+    private Damage(final Damage origin) {
+        this.type = origin.type;
+        this.value = type.finalValue(origin);
+        this.finalValue = true;
     }
 
     public static Damage of(BigInteger value, DamageType type) {
-        return new Damage(value, type, false);
+        return new Damage(value, type);
     }
 
     static Damage of(long value, DamageType type) {
-        return new Damage(BigInteger.valueOf(value), type, false);
-    }
-
-    static Damage ofFinalValue(BigInteger value, DamageType type) {
-        return new Damage(value, type, true);
+        return new Damage(BigInteger.valueOf(value), type);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class Damage implements Formattable, Comparable<Damage> {
 
     public Damage finalValue() {
         checkState(!finalValue);
-        return type.calculate(this);
+        return new Damage(this);
     }
 
     BigInteger toBigInteger() {

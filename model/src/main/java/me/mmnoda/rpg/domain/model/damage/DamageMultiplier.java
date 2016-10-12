@@ -36,7 +36,7 @@ enum DamageMultiplier {
 
     DOUBLE(BigDecimal.valueOf(2));
 
-    private BigDecimal multiplier;
+    private final BigDecimal multiplier;
 
     DamageMultiplier(BigDecimal multiplier) {
         this.multiplier = multiplier;

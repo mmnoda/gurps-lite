@@ -22,6 +22,7 @@ package me.mmnoda.rpg.domain.model.damage;
 
 import com.google.common.collect.ImmutableSet;
 
+import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Set;
@@ -73,8 +74,8 @@ public enum DamageType implements Formattable {
         this(NONE, abbreviation);
     }
 
-    Damage calculate(final Damage damage) {
-        return Damage.ofFinalValue(multiplier.multiply(damage.toBigInteger()), this);
+    BigInteger finalValue(final Damage damage) {
+        return multiplier.multiply(damage.toBigInteger());
     }
 
     @Override
