@@ -57,14 +57,14 @@ public class DefaultDiceRepresentationTest {
     public void should_format_with_adjustment_positive() {
         buildDefaultDiceRepresentation(singleRollable, NumberOfDices.THREE, DiceAdjustment.of(7));
         format();
-        assertFormattedIsEqualTo("3D + 7");
+        assertFormattedIsEqualTo("3d + 7");
     }
 
     @Test
     public void should_format_with_adjustment_negative() {
         buildDefaultDiceRepresentation(singleRollable, NumberOfDices.of(12), DiceAdjustment.of(-10));
         format();
-        assertFormattedIsEqualTo("12D - 10");
+        assertFormattedIsEqualTo("12d - 10");
 
     }
 
@@ -72,7 +72,7 @@ public class DefaultDiceRepresentationTest {
     public void should_format_without_adjustment() {
         buildDefaultDiceRepresentation(singleRollable, NumberOfDices.of(5));
         format();
-        assertFormattedIsEqualTo("5D");
+        assertFormattedIsEqualTo("5d");
     }
 
     @Test

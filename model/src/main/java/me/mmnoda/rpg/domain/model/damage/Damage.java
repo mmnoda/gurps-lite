@@ -37,17 +37,25 @@ public class Damage implements Formattable, Comparable<Damage> {
 
     private final DamageType type;
 
+    private final ArmorDivisor armorDivisor;
+
     private final boolean finalValue;
 
     private Damage(BigInteger value, DamageType type) {
+        this(value, type, ArmorDivisor.NONE);
+    }
+
+    private Damage(BigInteger value, DamageType type, ArmorDivisor armorDivisor) {
         this.value = value;
         this.type = type;
+        this.armorDivisor = armorDivisor;
         this.finalValue = false;
     }
 
     private Damage(final Damage origin) {
         this.type = origin.type;
         this.value = type.finalValue(origin);
+        this.armorDivisor = origin.armorDivisor;
         this.finalValue = true;
     }
 
@@ -59,9 +67,13 @@ public class Damage implements Formattable, Comparable<Damage> {
         return new Damage(BigInteger.valueOf(value), type);
     }
 
+    public static Damage of(BigInteger value, DamageType type, ArmorDivisor armorDivisor) {
+        return new Damage(value, type, armorDivisor);
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(value, type);
+        return Objects.hash(value, type, armorDivisor);
     }
 
     @Override
@@ -73,7 +85,8 @@ public class Damage implements Formattable, Comparable<Damage> {
         if (obj instanceof Damage) {
             final Damage other = (Damage) obj;
             return Objects.equals(this.value, other.value)
-                    && Objects.equals(this.type, other.type);
+                    && Objects.equals(this.type, other.type)
+                    && Objects.equals(this.armorDivisor, other.armorDivisor);
         }
 
         return false;
@@ -84,6 +97,7 @@ public class Damage implements Formattable, Comparable<Damage> {
         return toStringHelper(this)
                 .add("value", value)
                 .add("type", type)
+                .add("armorDivisor", armorDivisor)
                 .add("finalValue", finalValue)
                 .toString();
     }

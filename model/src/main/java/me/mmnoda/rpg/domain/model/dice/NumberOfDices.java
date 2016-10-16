@@ -36,9 +36,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
-    private static final NumberOfDices ZERO = newNumberOfDices(BigInteger.ZERO);
-    public static final NumberOfDices ONE = newNumberOfDices(BigInteger.ONE);
-    public static final NumberOfDices THREE = newNumberOfDices(BigInteger.valueOf(3));
+    private static final NumberOfDices ZERO = of(BigInteger.ZERO);
+    public static final NumberOfDices ONE = of(BigInteger.ONE);
+    public static final NumberOfDices THREE = of(BigInteger.valueOf(3));
 
     private final BigInteger quantity;
 
@@ -46,13 +46,13 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
         this.quantity = quantity;
     }
 
-    public static NumberOfDices newNumberOfDices(BigInteger quantity) {
+    public static NumberOfDices of(BigInteger quantity) {
         checkNotNull(quantity);
         return new NumberOfDices(quantity);
     }
 
     public static NumberOfDices of(long quantity) {
-        return newNumberOfDices(BigInteger.valueOf(quantity));
+        return of(BigInteger.valueOf(quantity));
     }
 
     @Override
@@ -104,7 +104,7 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
     }
 
     private NumberOfDices plusOne() {
-        return newNumberOfDices(quantity.add(BigInteger.ONE));
+        return of(quantity.add(BigInteger.ONE));
     }
 
     @Override

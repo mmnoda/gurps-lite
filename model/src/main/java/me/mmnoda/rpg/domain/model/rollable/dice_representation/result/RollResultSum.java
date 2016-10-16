@@ -22,6 +22,7 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
+import me.mmnoda.rpg.domain.model.damage.ArmorDivisor;
 import me.mmnoda.rpg.domain.model.damage.Damage;
 import me.mmnoda.rpg.domain.model.damage.DamageType;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
@@ -161,8 +162,8 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         return this.overall.compareTo(o.overall);
     }
 
-    public Damage toDamage(final DamageType type) {
-        return overall.toDamage(type);
+    public Damage toDamage(final DamageType type, final ArmorDivisor armorDivisor) {
+        return overall.toDamage(type, armorDivisor);
     }
 
     public OverallRollSumValue getOverall() {

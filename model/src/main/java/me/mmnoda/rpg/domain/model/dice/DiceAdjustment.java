@@ -35,7 +35,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
 
-    public static final DiceAdjustment ZERO = newDiceAdjustment(BigInteger.ZERO);
+    public static final DiceAdjustment ZERO = of(BigInteger.ZERO);
 
     private static final Map<Integer, String> SIGNAL_MAP = ImmutableMap.of(+1, "+", 0, "", -1, "-");
 
@@ -45,12 +45,12 @@ public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
         this.value = value;
     }
 
-    public static DiceAdjustment newDiceAdjustment(BigInteger value) {
+    public static DiceAdjustment of(BigInteger value) {
         return new DiceAdjustment(value);
     }
 
     public static DiceAdjustment of(long value) {
-        return newDiceAdjustment(BigInteger.valueOf(value));
+        return of(BigInteger.valueOf(value));
     }
 
     @Override

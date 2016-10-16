@@ -42,12 +42,12 @@ public final class DifferenceOfRoll implements Comparable<DifferenceOfRoll>, For
         this.value = value;
     }
 
-    public static DifferenceOfRoll newDifferenceOfRoll(BigInteger value) {
+    public static DifferenceOfRoll of(BigInteger value) {
         return new DifferenceOfRoll(value);
     }
 
     public static DifferenceOfRoll of(long value) {
-        return newDifferenceOfRoll(BigInteger.valueOf(value));
+        return of(BigInteger.valueOf(value));
     }
 
     @Override

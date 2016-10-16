@@ -20,13 +20,13 @@ package me.mmnoda.rpg.domain.model.action.result;
  * #L%
  */
 
-import com.google.common.base.Objects;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.critical.CriticalStatus;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import java.util.Formattable;
 import java.util.Formatter;
+import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -55,7 +55,7 @@ public class ActionRollResult implements HasIndicatorOfSuccess, Formattable {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(effectiveValue, criticalStatus, rollResultSum);
+        return Objects.hash(effectiveValue, criticalStatus, rollResultSum);
     }
 
     @Override
@@ -66,9 +66,9 @@ public class ActionRollResult implements HasIndicatorOfSuccess, Formattable {
 
         if (obj instanceof ActionRollResult) {
             final ActionRollResult other = (ActionRollResult) obj;
-            return Objects.equal(this.effectiveValue, other.effectiveValue)
-                    && Objects.equal(this.criticalStatus, other.criticalStatus)
-                    && Objects.equal(this.rollResultSum, other.rollResultSum);
+            return Objects.equals(this.effectiveValue, other.effectiveValue)
+                    && Objects.equals(this.criticalStatus, other.criticalStatus)
+                    && Objects.equals(this.rollResultSum, other.rollResultSum);
         }
 
         return false;
@@ -104,13 +104,12 @@ public class ActionRollResult implements HasIndicatorOfSuccess, Formattable {
     }
 
     public static class Builder {
+        private CriticalStatus criticalStatus = CriticalStatus.NORMAL;
         private EffectiveValue effectiveValue;
-        private CriticalStatus criticalStatus;
         private RollResultSum rollResultSum;
         private DifferenceOfRoll differenceOfRoll;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public Builder withEffectiveValue(EffectiveValue effectiveValue) {
             this.effectiveValue = effectiveValue;

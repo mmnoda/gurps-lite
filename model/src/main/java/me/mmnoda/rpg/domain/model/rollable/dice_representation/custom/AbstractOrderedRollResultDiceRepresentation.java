@@ -36,7 +36,7 @@ abstract class AbstractOrderedRollResultDiceRepresentation extends AbstractDiceR
 
     private final int numberOfRolls;
 
-    protected AbstractOrderedRollResultDiceRepresentation(DiceRepresentation decorated, int numberOfRolls) {
+    AbstractOrderedRollResultDiceRepresentation(DiceRepresentation decorated, int numberOfRolls) {
         super(decorated);
         checkArgument(numberOfRolls > 0);
         this.numberOfRolls = numberOfRolls;

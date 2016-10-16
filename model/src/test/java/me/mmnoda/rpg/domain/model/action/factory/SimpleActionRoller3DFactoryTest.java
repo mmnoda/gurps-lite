@@ -33,10 +33,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SimpleActionRoller3DFactoryTest {
 
+    private final CriticalDeterminationFactory determinationFactory = CriticalDeterminationFactory.INSTANCE;
+
     private SimpleActionRoller3DFactory factory;
 
     private ActionRoller actionRoller;
-    private final CriticalDeterminationFactory determinationFactory = CriticalDeterminationFactory.INSTANCE;
 
     @Test
     public void should_build_default_action_roller() {

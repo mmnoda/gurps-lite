@@ -123,7 +123,7 @@ public class DefaultDiceRepresentation implements DiceRepresentation, Formattabl
     private StringBuilder processFormatTo() {
         final StringBuilder result = new StringBuilder()
                 .append(String.format("%s", numberOfDices))
-                .append('D');
+                .append('d');
 
         if (adjustment.hasAValue()) {
             result.append(String.format("%s", adjustment));

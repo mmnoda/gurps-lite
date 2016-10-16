@@ -20,6 +20,7 @@ package me.mmnoda.rpg.domain.model.rollable.damage_representation.result;
  * #L%
  */
 
+import me.mmnoda.rpg.domain.model.damage.ArmorDivisor;
 import me.mmnoda.rpg.domain.model.damage.Damage;
 import me.mmnoda.rpg.domain.model.damage.DamageType;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
@@ -39,9 +40,20 @@ public class RollDamageResult implements Formattable {
 
     private final DamageType damageType;
 
+    private final ArmorDivisor armorDivisor;
+
     private RollDamageResult(RollResultSum rollResultSum, DamageType damageType) {
+        this(rollResultSum, damageType, ArmorDivisor.NONE);
+    }
+
+    private RollDamageResult(RollResultSum rollResultSum, DamageType damageType, ArmorDivisor armorDivisor) {
         this.rollResultSum = rollResultSum;
         this.damageType = damageType;
+        this.armorDivisor = armorDivisor;
+    }
+
+    public static RollDamageResult of(RollResultSum rollResultSum, DamageType damageType, ArmorDivisor armorDivisor) {
+        return new RollDamageResult(rollResultSum, damageType, armorDivisor);
     }
 
     @Override
@@ -69,6 +81,7 @@ public class RollDamageResult implements Formattable {
         return toStringHelper(this)
                 .add("rollResultSum", rollResultSum)
                 .add("damageType", damageType)
+                .add("armorDivisor", armorDivisor)
                 .toString();
     }
 
@@ -77,7 +90,7 @@ public class RollDamageResult implements Formattable {
     }
 
     public Damage toDamage() {
-        return rollResultSum.toDamage(damageType);
+        return rollResultSum.toDamage(damageType, armorDivisor);
     }
 
     public RollDamageResult doubleValue() {

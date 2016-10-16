@@ -33,8 +33,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class NumberOfFaces implements Serializable, Formattable, Comparable<NumberOfFaces> {
 
-    public static final NumberOfFaces _6 = valueOf(BigInteger.valueOf(6));
-    public static final NumberOfFaces _100 = valueOf(BigInteger.valueOf(100));
+    public static final NumberOfFaces _6 = of(BigInteger.valueOf(6));
+    public static final NumberOfFaces _100 = of(BigInteger.valueOf(100));
 
     private final BigInteger faces;
 
@@ -42,7 +42,7 @@ public class NumberOfFaces implements Serializable, Formattable, Comparable<Numb
         this.faces = faces;
     }
 
-    public static NumberOfFaces valueOf(BigInteger faces) {
+    public static NumberOfFaces of(BigInteger faces) {
         return new NumberOfFaces(faces);
     }
 

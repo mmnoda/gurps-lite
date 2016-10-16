@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 abstract class AbstractDiceRepresentationDecorator implements DiceRepresentation, Formattable {
 
-    protected final DiceRepresentation decorated;
+    final DiceRepresentation decorated;
 
     AbstractDiceRepresentationDecorator(DiceRepresentation decorated) {
         checkNotNull(decorated);

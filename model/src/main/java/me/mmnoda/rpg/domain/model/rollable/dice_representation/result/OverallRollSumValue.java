@@ -23,6 +23,7 @@ package me.mmnoda.rpg.domain.model.rollable.dice_representation.result;
 import com.google.common.collect.Range;
 import me.mmnoda.rpg.domain.model.action.EffectiveValue;
 import me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll;
+import me.mmnoda.rpg.domain.model.damage.ArmorDivisor;
 import me.mmnoda.rpg.domain.model.damage.Damage;
 import me.mmnoda.rpg.domain.model.damage.DamageType;
 
@@ -32,7 +33,6 @@ import java.util.Formatter;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static me.mmnoda.rpg.domain.model.action.result.DifferenceOfRoll.newDifferenceOfRoll;
 
 /**
  *
@@ -89,8 +89,8 @@ public final class OverallRollSumValue implements Formattable, Comparable<Overal
         return of(value.multiply(BigInteger.valueOf(3)));
     }
 
-    Damage toDamage(final DamageType type) {
-        return Damage.of(value, type);
+    Damage toDamage(final DamageType type, final ArmorDivisor armorDivisor) {
+        return Damage.of(value, type, armorDivisor);
     }
 
     boolean isCriticalMiss(EffectiveValue effectiveValue) {
@@ -103,7 +103,7 @@ public final class OverallRollSumValue implements Formattable, Comparable<Overal
     }
 
     DifferenceOfRoll calculateDifference(EffectiveValue effectiveValue) {
-        return newDifferenceOfRoll(effectiveValue.toBigInteger().subtract(value));
+        return DifferenceOfRoll.of(effectiveValue.toBigInteger().subtract(value));
     }
 
     @Override

@@ -20,6 +20,7 @@ package me.mmnoda.rpg.domain.model.rollable.damage_representation;
  * #L%
  */
 
+import me.mmnoda.rpg.domain.model.damage.ArmorDivisor;
 import me.mmnoda.rpg.domain.model.damage.DamageType;
 import me.mmnoda.rpg.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.rpg.domain.model.rollable.damage_representation.result.RollDamageResult;
@@ -42,9 +43,12 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
 
     private final DamageType damageType;
 
+    private final ArmorDivisor armorDivisor;
+
     private DefaultDamageDiceRepresentation(DiceRepresentation diceRepresentation, DamageType damageType) {
         this.diceRepresentation = diceRepresentation;
         this.damageType = damageType;
+        this.armorDivisor = ArmorDivisor.NONE;
     }
 
     public static DefaultDamageDiceRepresentation of(DiceRepresentation diceRepresentation, DamageType damageType) {
@@ -76,6 +80,7 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
         return toStringHelper(this)
                 .add("diceRepresentation", diceRepresentation)
                 .add("damageType", damageType)
+                .add("armorDivisor", armorDivisor)
                 .toString();
     }
 
@@ -117,11 +122,11 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
     }
 
     private RollDamageResult damageResult(RollResultSum roll) {
-        return RollDamageResult.of(roll, damageType);
+        return RollDamageResult.of(roll, damageType, armorDivisor);
     }
 
     @Override
     public void formatTo(Formatter formatter, int flags, int width, int precision) {
-        formatter.format("%s %s", diceRepresentation, damageType);
+        formatter.format("%s%s %s", diceRepresentation, armorDivisor, damageType);
     }
 }
