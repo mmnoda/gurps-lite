@@ -46,13 +46,21 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
     private final ArmorDivisor armorDivisor;
 
     private DefaultDamageDiceRepresentation(DiceRepresentation diceRepresentation, DamageType damageType) {
+        this(diceRepresentation, damageType, ArmorDivisor.NONE);
+    }
+
+    private DefaultDamageDiceRepresentation(DiceRepresentation diceRepresentation, DamageType damageType, ArmorDivisor armorDivisor) {
         this.diceRepresentation = diceRepresentation;
         this.damageType = damageType;
-        this.armorDivisor = ArmorDivisor.NONE;
+        this.armorDivisor = armorDivisor;
     }
 
     public static DefaultDamageDiceRepresentation of(DiceRepresentation diceRepresentation, DamageType damageType) {
         return new DefaultDamageDiceRepresentation(diceRepresentation, damageType);
+    }
+
+    public static DefaultDamageDiceRepresentation of(DiceRepresentation diceRepresentation, DamageType damageType, ArmorDivisor armorDivisor) {
+        return new DefaultDamageDiceRepresentation(diceRepresentation, damageType, armorDivisor);
     }
 
     @Override

@@ -30,7 +30,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public enum ArmorDivisor implements Formattable {
 
-    NONE("");
+    NONE(""),
+
+    _2("(2)"),
+
+    _3("(3)"),
+
+    _5("(5)"),
+
+    _10("(10)");
 
     private final String format;
 

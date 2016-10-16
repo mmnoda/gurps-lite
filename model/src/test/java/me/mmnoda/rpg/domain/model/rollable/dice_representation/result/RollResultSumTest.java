@@ -69,7 +69,7 @@ public class RollResultSumTest {
 
         format();
         assertRollResultSumIsNotNull();
-        assertFormattedIsEqualTo("(4) + 3 = 7");
+        assertFormattedIsEqualTo("(4)+3 = 7");
     }
 
     @Test
@@ -84,7 +84,7 @@ public class RollResultSumTest {
 
         format();
         assertRollResultSumIsNotNull();
-        assertFormattedIsEqualTo("(1 + 2 + 3 + 4) + 1 = 11");
+        assertFormattedIsEqualTo("(1 + 2 + 3 + 4)+1 = 11");
     }
 
     @Test(expected = IllegalStateException.class)
@@ -106,7 +106,7 @@ public class RollResultSumTest {
         doubleValue();
         format();
         assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue.of(30));
-        assertFormattedIsEqualTo("[(2 + 4 + 6) + 3] * 2 = 30");
+        assertFormattedIsEqualTo("[(2 + 4 + 6)+3] * 2 = 30");
     }
 
     @Test
@@ -120,7 +120,7 @@ public class RollResultSumTest {
         tripleValue();
         format();
         assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue.of(27));
-        assertFormattedIsEqualTo("[(3 + 5) + 1] * 3 = 27");
+        assertFormattedIsEqualTo("[(3 + 5)+1] * 3 = 27");
     }
 
     private void assertOverallOfRollResultSumIsEqualTo(OverallRollSumValue of) {

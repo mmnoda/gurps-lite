@@ -25,7 +25,6 @@ import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
 import me.mmnoda.rpg.domain.model.dice.NumberOfFaces;
 import me.mmnoda.rpg.domain.model.rollable.dice_representation.result.RollResultSum;
 
-import java.util.Comparator;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Objects;
@@ -35,7 +34,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
-public class DefaultDiceRepresentation implements DiceRepresentation, Formattable, Comparable<DefaultDiceRepresentation> {
+public class DefaultDiceRepresentation implements DiceRepresentation, Formattable {
 
     private final NumberOfDices numberOfDices;
     private final SingleRollable rollable;
@@ -131,14 +130,5 @@ public class DefaultDiceRepresentation implements DiceRepresentation, Formattabl
         return result;
     }
 
-    @Override
-    public int compareTo(DefaultDiceRepresentation o) {
-        final Comparator<DefaultDiceRepresentation> comparator = (DefaultDiceRepresentation d1, DefaultDiceRepresentation d2) ->
-                d1.numberOfDices.compareTo(d2.numberOfDices);
 
-        return comparator
-                .thenComparing((DefaultDiceRepresentation d1, DefaultDiceRepresentation d2) -> d1.getNumberOfFaces().compareTo(d2.getNumberOfFaces()))
-                .thenComparing((DefaultDiceRepresentation d1, DefaultDiceRepresentation d2) -> d1.adjustment.compareTo(d2.adjustment))
-                .compare(this, o);
-    }
 }
