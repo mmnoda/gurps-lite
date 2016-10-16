@@ -20,6 +20,7 @@ package me.mmnoda.rpg.domain.model.rollable.damage_representation;
  * #L%
  */
 
+import me.mmnoda.rpg.domain.model.damage.ArmorDivisor;
 import me.mmnoda.rpg.domain.model.damage.DamageType;
 import me.mmnoda.rpg.domain.model.dice.DiceAdjustment;
 import me.mmnoda.rpg.domain.model.dice.NumberOfDices;
@@ -35,6 +36,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static me.mmnoda.rpg.domain.model.damage.DamageType.CRUSH;
+import static me.mmnoda.rpg.domain.model.damage.DamageType.PIERCING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -50,12 +53,13 @@ public class DefaultDamageDiceRepresentationTest {
 
     private final DamageType[] types = DamageType.values();
 
-    private DamageDiceRepresentation damageDiceRepresentation;
+    private DefaultDamageDiceRepresentation damageDiceRepresentation;
 
     @Mock
     private DiceRepresentation diceRepresentation;
 
     private RollDamageResult result;
+    private String formatted;
 
     @Before
     public void setUp() throws Exception {
@@ -150,6 +154,31 @@ public class DefaultDamageDiceRepresentationTest {
         verifyNeverCallRoll();
     }
 
+    @Test
+    public void should_format_crush_type_without_armor_divisor() {
+        buildDamageDiceRepresentation(CRUSH);
+        format();
+        assertFormattedIsEqualsTo("diceRepresentation cr");
+    }
+
+    @Test
+    public void should_format_crush_type_with_armor_divisor_of_2() {
+        buildDamageDiceRepresentation(PIERCING, ArmorDivisor._2);
+        format();
+        assertFormattedIsEqualsTo("diceRepresentation(2) pi");
+    }
+
+    private void format() {
+        formatted = String.format("%s", damageDiceRepresentation);
+    }
+
+    private void assertFormattedIsEqualsTo(String expected) {
+        assertThat(formatted)
+                .isNotNull()
+                .isNotEmpty()
+                .isEqualTo(expected);
+    }
+
     private void rollManualInput() {
         result = damageDiceRepresentation.rollManualInput(SingleRollResult.of(6));
     }
@@ -193,6 +222,10 @@ public class DefaultDamageDiceRepresentationTest {
 
     private void buildDamageDiceRepresentation(DamageType type) {
         damageDiceRepresentation = DefaultDamageDiceRepresentation.of(diceRepresentation, type);
+    }
+
+    private void buildDamageDiceRepresentation(DamageType type, ArmorDivisor armorDivisor) {
+        damageDiceRepresentation = DefaultDamageDiceRepresentation.of(diceRepresentation, type, armorDivisor);
     }
 
     private void assertResultIsEqualsTo(RollDamageResult of) {
