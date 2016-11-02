@@ -10,17 +10,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gurps-lite-model</artifactId>
+    <artifactId>gurps-lite-web</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <groupId>me.mmnoda</groupId>
+            <artifactId>gurps-lite-model</artifactId>
         </dependency>
 
     </dependencies>
+
 
 </project>

@@ -162,7 +162,7 @@ public class DefaultDamageDiceRepresentationTest {
     }
 
     @Test
-    public void should_format_crush_type_with_armor_divisor_of_2() {
+    public void should_format_piercing_type_with_armor_divisor_of_2() {
         buildDamageDiceRepresentation(PIERCING, ArmorDivisor._2);
         format();
         assertFormattedIsEqualsTo("diceRepresentation(2) pi");
