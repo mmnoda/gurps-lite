@@ -76,7 +76,7 @@ public class ArbitraryValuesDiceRepresentation extends AbstractDiceRepresentatio
         if (this == o)
             return true;
 
-        if (o instanceof ArbitraryValuesDiceRepresentation){
+        if (o instanceof ArbitraryValuesDiceRepresentation) {
             final ArbitraryValuesDiceRepresentation other = (ArbitraryValuesDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }

@@ -130,5 +130,4 @@ public class DefaultDiceRepresentation implements DiceRepresentation, Formattabl
         return result;
     }
 
-
 }

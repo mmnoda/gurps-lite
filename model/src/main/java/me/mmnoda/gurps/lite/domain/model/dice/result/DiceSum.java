@@ -104,7 +104,7 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable, Iterable
         return of(rollResult, this);
     }
 
-    public DiceSum half(){
+    public DiceSum half() {
         return of(value.divide(BigInteger.valueOf(2)));
     }
 

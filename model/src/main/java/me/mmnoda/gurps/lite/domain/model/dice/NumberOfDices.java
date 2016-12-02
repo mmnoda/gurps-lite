@@ -20,6 +20,10 @@ package me.mmnoda.gurps.lite.domain.model.dice;
  * #L%
  */
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfDicesJsonDeserializer;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfDicesJsonSerializer;
 import me.mmnoda.gurps.lite.domain.model.dice.result.DiceSum;
 
 import java.math.BigInteger;
@@ -34,6 +38,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
+@JsonSerialize(using = NumberOfDicesJsonSerializer.class)
+@JsonDeserialize(using = NumberOfDicesJsonDeserializer.class)
 public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
     private static final NumberOfDices ZERO = of(BigInteger.ZERO);
@@ -79,6 +85,10 @@ public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<Number
         return toStringHelper(this)
                 .add("quantity", quantity)
                 .toString();
+    }
+
+    public BigInteger toBigInteger() {
+        return quantity;
     }
 
     public DiceSum maxDiceSum(final NumberOfFaces numberOfFaces) {

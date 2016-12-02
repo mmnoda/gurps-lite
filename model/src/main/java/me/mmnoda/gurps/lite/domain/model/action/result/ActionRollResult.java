@@ -109,7 +109,8 @@ public class ActionRollResult implements HasIndicatorOfSuccess, Formattable {
         private RollResultSum rollResultSum;
         private DifferenceOfRoll differenceOfRoll;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder withEffectiveValue(EffectiveValue effectiveValue) {
             this.effectiveValue = effectiveValue;

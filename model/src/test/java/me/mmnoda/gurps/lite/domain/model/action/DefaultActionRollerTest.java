@@ -71,7 +71,7 @@ public class DefaultActionRollerTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         reset(actionRollerBuilder, diceRepresentation);
     }
 

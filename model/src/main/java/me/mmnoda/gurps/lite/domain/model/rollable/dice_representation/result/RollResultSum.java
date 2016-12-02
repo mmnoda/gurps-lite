@@ -173,7 +173,8 @@ public final class RollResultSum implements Serializable, Formattable, Comparabl
         private DiceAdjustment adjustment = DiceAdjustment.ZERO;
         private DiceSum sum = DiceSum.ZERO;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         public Builder withAdjustment(final DiceAdjustment adjustment) {
             checkNotNull(adjustment);

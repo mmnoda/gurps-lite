@@ -28,7 +28,6 @@ import me.mmnoda.gurps.lite.domain.model.action.result.HasIndicatorOfSuccess;
 public enum CriticalStatus {
 
     CRITICAL_SUCCESS {
-
         @Override
         public boolean isSuccess(HasIndicatorOfSuccess result) {
             return true;
@@ -41,7 +40,6 @@ public enum CriticalStatus {
     },
 
     CRITICAL_MISS {
-
         @Override
         public boolean isSuccess(HasIndicatorOfSuccess result) {
             return false;
@@ -54,7 +52,6 @@ public enum CriticalStatus {
     },
 
     NORMAL {
-
         @Override
         public boolean isSuccess(HasIndicatorOfSuccess result) {
             return result.succeededByDiceSum();

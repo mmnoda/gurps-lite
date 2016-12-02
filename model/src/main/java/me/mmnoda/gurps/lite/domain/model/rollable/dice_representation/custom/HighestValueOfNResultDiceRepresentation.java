@@ -56,7 +56,7 @@ public class HighestValueOfNResultDiceRepresentation extends AbstractOrderedRoll
         if (this == o)
             return true;
 
-        if (o instanceof HighestValueOfNResultDiceRepresentation){
+        if (o instanceof HighestValueOfNResultDiceRepresentation) {
             final HighestValueOfNResultDiceRepresentation other = (HighestValueOfNResultDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }

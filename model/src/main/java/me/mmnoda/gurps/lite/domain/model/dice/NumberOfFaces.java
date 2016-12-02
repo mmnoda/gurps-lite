@@ -20,6 +20,11 @@ package me.mmnoda.gurps.lite.domain.model.dice;
  * #L%
  */
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfFacesJsonDeserializer;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfFacesJsonSerializer;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
@@ -31,6 +36,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 /**
  *
  */
+@JsonSerialize(using = NumberOfFacesJsonSerializer.class)
+@JsonDeserialize(using = NumberOfFacesJsonDeserializer.class)
 public class NumberOfFaces implements Serializable, Formattable, Comparable<NumberOfFaces> {
 
     public static final NumberOfFaces _6 = of(BigInteger.valueOf(6));

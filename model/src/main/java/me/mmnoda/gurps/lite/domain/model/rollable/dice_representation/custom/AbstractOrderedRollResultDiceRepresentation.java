@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  *
  */
-abstract class AbstractOrderedRollResultDiceRepresentation extends AbstractDiceRepresentationDecorator  {
+abstract class AbstractOrderedRollResultDiceRepresentation extends AbstractDiceRepresentationDecorator {
 
     private final int numberOfRolls;
 

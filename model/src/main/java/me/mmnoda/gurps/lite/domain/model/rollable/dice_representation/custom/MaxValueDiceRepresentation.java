@@ -61,7 +61,7 @@ public final class MaxValueDiceRepresentation extends AbstractDiceRepresentation
         if (this == o)
             return true;
 
-        if (o instanceof MaxValueDiceRepresentation){
+        if (o instanceof MaxValueDiceRepresentation) {
             final MaxValueDiceRepresentation other = (MaxValueDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }

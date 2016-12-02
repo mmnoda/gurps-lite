@@ -20,7 +20,11 @@ package me.mmnoda.gurps.lite.domain.model.action;
  * #L%
  */
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Range;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.EffectiveValueJsonDeserializer;
+import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.EffectiveValueJsonSerializer;
 
 import java.math.BigInteger;
 import java.util.Formattable;
@@ -33,6 +37,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  *
  */
+@JsonSerialize(using = EffectiveValueJsonSerializer.class)
+@JsonDeserialize(using = EffectiveValueJsonDeserializer.class)
 public final class EffectiveValue implements Comparable<EffectiveValue>, Formattable {
 
     public static final EffectiveValue TEN = of(10);

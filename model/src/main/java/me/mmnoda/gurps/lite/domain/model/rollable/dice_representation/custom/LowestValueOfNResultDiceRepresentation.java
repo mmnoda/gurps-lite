@@ -56,7 +56,7 @@ public class LowestValueOfNResultDiceRepresentation extends AbstractOrderedRollR
         if (this == o)
             return true;
 
-        if (o instanceof LowestValueOfNResultDiceRepresentation){
+        if (o instanceof LowestValueOfNResultDiceRepresentation) {
             final LowestValueOfNResultDiceRepresentation other = (LowestValueOfNResultDiceRepresentation) o;
             return Objects.equals(this.decorated, other.decorated);
         }

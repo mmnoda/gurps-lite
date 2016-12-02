@@ -81,5 +81,4 @@ enum OnlyNaturalCriticalDetermination implements CriticalDetermination {
         }
     }
 
-
 }
