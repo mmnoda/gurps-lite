@@ -20,17 +20,20 @@ package me.mmnoda.gurps.lite.domain.model.dice;
  * #L%
  */
 
+import com.google.common.collect.ImmutableMap;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.ImmutableMap;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.DiceAdjustmentJsonDeserializer;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.DiceAdjustmentJsonSerializer;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Map;
 import java.util.Objects;
+
+import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonSerializer;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -39,7 +42,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 @JsonSerialize(using = DiceAdjustmentJsonSerializer.class)
 @JsonDeserialize(using = DiceAdjustmentJsonDeserializer.class)
-public class DiceAdjustment implements Comparable<DiceAdjustment>, Formattable {
+public class DiceAdjustment implements Serializable, Comparable<DiceAdjustment>, Formattable {
 
     public static final DiceAdjustment ZERO = of(BigInteger.ZERO);
 

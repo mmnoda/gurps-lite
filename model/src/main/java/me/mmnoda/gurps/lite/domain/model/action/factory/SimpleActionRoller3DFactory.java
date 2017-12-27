@@ -23,7 +23,7 @@ package me.mmnoda.gurps.lite.domain.model.action.factory;
 import me.mmnoda.gurps.lite.domain.model.action.ActionRoller;
 import me.mmnoda.gurps.lite.domain.model.action.DefaultActionRoller;
 import me.mmnoda.gurps.lite.domain.model.action.critical.determination.CriticalDetermination;
-import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom.*;
+import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom.CustomDiceRepresentationFactoryMethod;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.factory.DefaultRollablesFactory;
 
 /**
@@ -40,40 +40,40 @@ public enum SimpleActionRoller3DFactory {
 
     MIN_VALUE_ROLL {
         @Override
-        public ActionRoller build(CriticalDetermination criticalDetermination) {
-            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> MinValueDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6()),
+        public ActionRoller build(final CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> CustomDiceRepresentationFactoryMethod.INSTANCE.buildMinValue(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     },
 
     MAX_VALUE_ROLL {
         @Override
-        public ActionRoller build(CriticalDetermination criticalDetermination) {
-            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> MaxValueDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6()),
+        public ActionRoller build(final CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> CustomDiceRepresentationFactoryMethod.INSTANCE.buildMaxValue(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     },
 
     AVG_VALUE_ROLL {
         @Override
-        public ActionRoller build(CriticalDetermination criticalDetermination) {
-            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> AvgValueDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6()),
+        public ActionRoller build(final CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> CustomDiceRepresentationFactoryMethod.INSTANCE.buildAvgValue(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     },
 
     BEST_OF_3_ROLLS {
         @Override
-        public ActionRoller build(CriticalDetermination criticalDetermination) {
-            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> LowestValueOfNResultDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6(), 3),
+        public ActionRoller build(final CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> CustomDiceRepresentationFactoryMethod.INSTANCE.buildLowestValueOf3(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     },
 
     WORST_OF_3_ROLLS {
         @Override
-        public ActionRoller build(CriticalDetermination criticalDetermination) {
-            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> HighestValueOfNResultDiceRepresentation.of(DefaultRollablesFactory.INSTANCE.build3D6(), 3),
+        public ActionRoller build(final CriticalDetermination criticalDetermination) {
+            return DefaultActionRoller.of(CustomActionRollerBuilder.of(() -> CustomDiceRepresentationFactoryMethod.INSTANCE.buildHighestValueOf3(DefaultRollablesFactory.INSTANCE.build3D6()),
                     criticalDetermination));
         }
     };

@@ -1,4 +1,4 @@
-package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
+package me.mmnoda.gurps.lite.infrastructure.converter.json;
 
 /*
  * #%L
@@ -23,18 +23,19 @@ package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
 
 import java.io.IOException;
 import java.math.BigInteger;
 
+import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
+
 /**
  *
  */
-public class DiceAdjustmentJsonDeserializer extends JsonDeserializer<DiceAdjustment> {
+public class NumberOfFacesJsonDeserializer extends JsonDeserializer<NumberOfFaces> {
 
     @Override
-    public DiceAdjustment deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return DiceAdjustment.of(jsonParser.readValueAs(BigInteger.class));
+    public NumberOfFaces deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        return NumberOfFaces.of(jsonParser.readValueAs(BigInteger.class));
     }
 }

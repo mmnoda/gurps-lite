@@ -34,7 +34,7 @@ public interface DamageDiceRepresentation {
 
     RollDamageResult rollMinValue();
 
-    RollDamageResult rollAvgMinValue();
+    RollDamageResult rollAvgValue();
 
     RollDamageResult rollHighestValueOf3();
 

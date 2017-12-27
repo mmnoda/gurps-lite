@@ -1,8 +1,8 @@
-package me.mmnoda.gurps.lite.domain.model.damage;
+package me.mmnoda.gurps.lite.infrastructure.converter.json;
 
 /*
  * #%L
- * model
+ * gurps-lite-model
  * %%
  * Copyright (C) 2016 Márcio Noda
  * %%
@@ -20,35 +20,21 @@ package me.mmnoda.gurps.lite.domain.model.damage;
  * #L%
  */
 
-import java.util.Formattable;
-import java.util.Formatter;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.io.IOException;
+
+import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 
 /**
  *
  */
-public enum ArmorDivisor implements Formattable {
-
-    NONE(""),
-
-    _2("(2)"),
-
-    _3("(3)"),
-
-    _5("(5)"),
-
-    _10("(10)");
-
-    private final String format;
-
-    ArmorDivisor(final String format) {
-        checkNotNull(format);
-        this.format = format;
-    }
+public class NumberOfFacesJsonSerializer extends JsonSerializer<NumberOfFaces> {
 
     @Override
-    public final void formatTo(final Formatter formatter, int flags, int width, int precision) {
-        formatter.format(format);
+    public void serialize(NumberOfFaces numberOfFaces, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeNumber(numberOfFaces.toBigInteger());
     }
 }

@@ -1,4 +1,4 @@
-package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
+package me.mmnoda.gurps.lite.infrastructure.converter.json;
 
 /*
  * #%L
@@ -20,20 +20,22 @@ package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
  * #L%
  */
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
+import java.math.BigInteger;
+
+import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 
 /**
  *
  */
-public class NumberOfFacesJsonSerializer extends JsonSerializer<NumberOfFaces> {
+public class NumberOfDicesJsonDeserializer extends JsonDeserializer<NumberOfDices> {
 
     @Override
-    public void serialize(NumberOfFaces numberOfFaces, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeNumber(numberOfFaces.toBigInteger());
+    public NumberOfDices deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        return NumberOfDices.of(jsonParser.readValueAs(BigInteger.class));
     }
 }

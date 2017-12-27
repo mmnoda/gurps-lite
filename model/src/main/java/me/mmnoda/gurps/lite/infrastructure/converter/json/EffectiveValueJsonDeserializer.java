@@ -1,4 +1,4 @@
-package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
+package me.mmnoda.gurps.lite.infrastructure.converter.json;
 
 /*
  * #%L
@@ -20,21 +20,22 @@ package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
  * #L%
  */
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
+import java.math.BigInteger;
+
+import me.mmnoda.gurps.lite.domain.model.action.EffectiveValue;
 
 /**
  *
  */
-public class NumberOfDicesJsonSerializer extends JsonSerializer<NumberOfDices> {
+public class EffectiveValueJsonDeserializer extends JsonDeserializer<EffectiveValue> {
 
     @Override
-    public void serialize(NumberOfDices numberOfDices, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
-        jsonGenerator.writeNumber(numberOfDices.toBigInteger());
+    public EffectiveValue deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        return EffectiveValue.of(jsonParser.readValueAs(BigInteger.class));
     }
 }

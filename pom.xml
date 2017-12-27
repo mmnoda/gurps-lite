@@ -11,7 +11,7 @@
     <organization>
         <name>Márcio Noda</name>
     </organization>
-    <inceptionYear>2016</inceptionYear>
+    <inceptionYear>2018</inceptionYear>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -70,6 +70,13 @@
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -20,24 +20,29 @@ package me.mmnoda.gurps.lite.domain.model.rollable.dice_representation;
  * #L%
  */
 
+import java.io.Serializable;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.Objects;
+
+import lombok.Getter;
 import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
-
-import java.util.Formattable;
-import java.util.Formatter;
-import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public class DefaultDiceRepresentation implements DiceRepresentation, Formattable {
+public class DefaultDiceRepresentation implements Serializable, DiceRepresentation, Formattable {
 
+    @Getter
     private final NumberOfDices numberOfDices;
+
     private final SingleRollable rollable;
+
     private final DiceAdjustment adjustment;
 
     private DefaultDiceRepresentation(SingleRollable rollable, NumberOfDices numberOfDices) {
@@ -106,11 +111,6 @@ public class DefaultDiceRepresentation implements DiceRepresentation, Formattabl
     @Override
     public DiceAdjustment getDiceAdjustment() {
         return adjustment;
-    }
-
-    @Override
-    public NumberOfDices getNumberOfDices() {
-        return numberOfDices;
     }
 
     @Override

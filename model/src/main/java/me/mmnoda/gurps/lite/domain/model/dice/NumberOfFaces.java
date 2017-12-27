@@ -22,14 +22,15 @@ package me.mmnoda.gurps.lite.domain.model.dice;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfFacesJsonDeserializer;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfFacesJsonSerializer;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Objects;
+
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonSerializer;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 

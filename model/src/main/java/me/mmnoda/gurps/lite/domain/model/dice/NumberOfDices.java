@@ -22,15 +22,17 @@ package me.mmnoda.gurps.lite.domain.model.dice;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfDicesJsonDeserializer;
-import me.mmnoda.gurps.lite.domain.infrastructure.converter.json.NumberOfDicesJsonSerializer;
-import me.mmnoda.gurps.lite.domain.model.dice.result.DiceSum;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Iterator;
 import java.util.Objects;
+
+import me.mmnoda.gurps.lite.domain.model.dice.result.DiceSum;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonSerializer;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,7 +42,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @JsonSerialize(using = NumberOfDicesJsonSerializer.class)
 @JsonDeserialize(using = NumberOfDicesJsonDeserializer.class)
-public class NumberOfDices implements Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
+public class NumberOfDices implements Serializable, Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
     private static final NumberOfDices ZERO = of(BigInteger.ZERO);
     public static final NumberOfDices ONE = of(BigInteger.ONE);

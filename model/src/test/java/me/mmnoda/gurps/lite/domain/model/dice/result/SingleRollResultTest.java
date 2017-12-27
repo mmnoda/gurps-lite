@@ -20,14 +20,15 @@ package me.mmnoda.gurps.lite.domain.model.dice.result;
  * #L%
  */
 
-import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigInteger;
 
-import static junit.framework.Assert.fail;
+import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  *

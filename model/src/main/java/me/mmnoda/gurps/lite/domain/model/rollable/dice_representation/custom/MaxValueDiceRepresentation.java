@@ -20,20 +20,20 @@ package me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom;
  * #L%
  */
 
+import java.util.Objects;
+
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import me.mmnoda.gurps.lite.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
 
-import java.util.Objects;
-
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
+final class MaxValueDiceRepresentation extends AbstractDiceRepresentationOverrideRollResult {
 
     private MaxValueDiceRepresentation(DiceRepresentation decorated) {
         super(decorated);

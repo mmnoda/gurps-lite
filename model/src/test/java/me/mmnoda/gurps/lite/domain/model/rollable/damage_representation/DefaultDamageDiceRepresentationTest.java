@@ -20,6 +20,13 @@ package me.mmnoda.gurps.lite.domain.model.rollable.damage_representation;
  * #L%
  */
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import me.mmnoda.gurps.lite.domain.model.damage.ArmorDivisor;
 import me.mmnoda.gurps.lite.domain.model.damage.DamageType;
 import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
@@ -29,15 +36,13 @@ import me.mmnoda.gurps.lite.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.gurps.lite.domain.model.rollable.damage_representation.result.RollDamageResult;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepresentation;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -182,7 +187,7 @@ public class DefaultDamageDiceRepresentationTest {
     }
 
     private void rollAvgMinValue() {
-        result = damageDiceRepresentation.rollAvgMinValue();
+        result = damageDiceRepresentation.rollAvgValue();
     }
 
     private void verifyRoll3Times() {

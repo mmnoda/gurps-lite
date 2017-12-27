@@ -1,4 +1,4 @@
-package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
+package me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic;
 
 /*
  * #%L
@@ -20,21 +20,11 @@ package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
  * #L%
  */
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
-
-import java.io.IOException;
-import java.math.BigInteger;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.Attribute;
 
 /**
  *
  */
-public class NumberOfFacesJsonDeserializer extends JsonDeserializer<NumberOfFaces> {
+public interface SecondaryCharacteristic extends Attribute {
 
-    @Override
-    public NumberOfFaces deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return NumberOfFaces.of(jsonParser.readValueAs(BigInteger.class));
-    }
 }

@@ -20,24 +20,26 @@ package me.mmnoda.gurps.lite.domain.model.rollable.damage_representation;
  * #L%
  */
 
+import java.io.Serializable;
+import java.util.Formattable;
+import java.util.Formatter;
+
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.damage.ArmorDivisor;
 import me.mmnoda.gurps.lite.domain.model.damage.DamageType;
 import me.mmnoda.gurps.lite.domain.model.dice.result.SingleRollResult;
 import me.mmnoda.gurps.lite.domain.model.rollable.damage_representation.result.RollDamageResult;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepresentation;
-import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom.*;
+import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom.CustomDiceRepresentationFactoryMethod;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
-
-import java.util.Formattable;
-import java.util.Formatter;
-import java.util.Objects;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation, Formattable {
+@EqualsAndHashCode(of = {"diceRepresentation", "damageType", "armorDivisor"})
+@ToString
+public class DefaultDamageDiceRepresentation implements Serializable, DamageDiceRepresentation, Formattable {
 
     private final DiceRepresentation diceRepresentation;
 
@@ -64,69 +66,38 @@ public class DefaultDamageDiceRepresentation implements DamageDiceRepresentation
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(diceRepresentation, damageType);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof DefaultDamageDiceRepresentation) {
-            final DefaultDamageDiceRepresentation other = (DefaultDamageDiceRepresentation) obj;
-            return Objects.equals(this.diceRepresentation, other.diceRepresentation)
-                    && Objects.equals(this.damageType, other.damageType);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("diceRepresentation", diceRepresentation)
-                .add("damageType", damageType)
-                .add("armorDivisor", armorDivisor)
-                .toString();
-    }
-
-    @Override
     public RollDamageResult roll() {
         return damageResult(diceRepresentation.roll());
     }
 
     @Override
     public RollDamageResult rollMaxValue() {
-        return damageResult(MaxValueDiceRepresentation.of(diceRepresentation).roll());
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildMaxValue(diceRepresentation).roll());
     }
 
     @Override
     public RollDamageResult rollMinValue() {
-        return damageResult(MinValueDiceRepresentation.of(diceRepresentation).roll());
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildMinValue(diceRepresentation).roll());
     }
 
     @Override
-    public RollDamageResult rollAvgMinValue() {
-        return damageResult(AvgValueDiceRepresentation.of(diceRepresentation).roll());
+    public RollDamageResult rollAvgValue() {
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildAvgValue(diceRepresentation).roll());
     }
 
     @Override
     public RollDamageResult rollHighestValueOf3() {
-        return damageResult(HighestValueOfNResultDiceRepresentation.of(diceRepresentation, 3).roll());
-
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildHighestValueOf3(diceRepresentation).roll());
     }
 
     @Override
     public RollDamageResult rollLowestValueOf3() {
-        return damageResult(LowestValueOfNResultDiceRepresentation.of(diceRepresentation, 3).roll());
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildLowestValueOf3(diceRepresentation).roll());
     }
 
     @Override
     public RollDamageResult rollManualInput(SingleRollResult first, SingleRollResult... expectedResults) {
-        return damageResult(ArbitraryValuesDiceRepresentation.of(diceRepresentation, first, expectedResults).roll());
-
+        return damageResult(CustomDiceRepresentationFactoryMethod.INSTANCE.buildManualInput(diceRepresentation, first, expectedResults).roll());
     }
 
     private RollDamageResult damageResult(RollResultSum roll) {

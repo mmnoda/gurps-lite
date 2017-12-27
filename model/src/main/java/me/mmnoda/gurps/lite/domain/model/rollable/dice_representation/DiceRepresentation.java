@@ -20,12 +20,12 @@ package me.mmnoda.gurps.lite.domain.model.rollable.dice_representation;
  * #L%
  */
 
+import java.util.Comparator;
+
 import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
-
-import java.util.Comparator;
 
 /**
  *
@@ -41,13 +41,12 @@ public interface DiceRepresentation extends Comparable<DiceRepresentation> {
     NumberOfDices getNumberOfDices();
 
     @Override
-    default int compareTo(DiceRepresentation o) {
-        final Comparator<DiceRepresentation> comparator = (DiceRepresentation d1, DiceRepresentation d2) ->
-                d1.getNumberOfDices().compareTo(d2.getNumberOfDices());
+    default int compareTo(final DiceRepresentation o) {
+        final Comparator<DiceRepresentation> comparator = Comparator.comparing(DiceRepresentation::getNumberOfDices);
 
         return comparator
-                .thenComparing((DiceRepresentation d1, DiceRepresentation d2) -> d1.getNumberOfFaces().compareTo(d2.getNumberOfFaces()))
-                .thenComparing((DiceRepresentation d1, DiceRepresentation d2) -> d1.getDiceAdjustment().compareTo(d2.getDiceAdjustment()))
+                .thenComparing(Comparator.comparing(DiceRepresentation::getNumberOfFaces))
+                .thenComparing(Comparator.comparing(DiceRepresentation::getDiceAdjustment))
                 .compare(this, o);
     }
 }

@@ -1,4 +1,4 @@
-package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
+package me.mmnoda.gurps.lite.domain.model.character;
 
 /*
  * #%L
@@ -20,20 +20,15 @@ package me.mmnoda.gurps.lite.domain.infrastructure.converter.json;
  * #L%
  */
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
-
-import java.io.IOException;
+import java.io.Serializable;
 
 /**
  *
  */
-public class DiceAdjustmentJsonSerializer extends JsonSerializer<DiceAdjustment> {
+public class Character implements Serializable {
 
-    @Override
-    public void serialize(DiceAdjustment diceAdjustment, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeNumber(diceAdjustment.toBigInteger());
-    }
+
+    private CharacterPoints initialPoints = CharacterPoints.ZERO;
+
+
 }

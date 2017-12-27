@@ -20,18 +20,18 @@ package me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom;
  * #L%
  */
 
-import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepresentation;
-import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
-
 import java.util.Objects;
 import java.util.SortedSet;
+
+import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepresentation;
+import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
-public class HighestValueOfNResultDiceRepresentation extends AbstractOrderedRollResultDiceRepresentation {
+class HighestValueOfNResultDiceRepresentation extends AbstractOrderedRollResultDiceRepresentation {
 
     private HighestValueOfNResultDiceRepresentation(DiceRepresentation decorated, int numberOfRolls) {
         super(decorated, numberOfRolls);
