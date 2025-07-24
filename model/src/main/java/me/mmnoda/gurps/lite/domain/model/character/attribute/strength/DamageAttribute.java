@@ -20,15 +20,14 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute.strength;
  * #L%
  */
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeAbbreviate;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeData;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeObserver;
-import me.mmnoda.gurps.lite.domain.model.rollable.damage_representation.DamageDiceRepresentation;
+
+import java.util.Formattable;
+import java.util.Formatter;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeAbbreviate.ST;
@@ -40,13 +39,15 @@ import static me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeAbb
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class DamageAttribute implements AttributeObserver {
+public class DamageAttribute implements AttributeObserver, Formattable {
 
-    private DamageDiceRepresentation swingDamage;
+    private SwingDamage swingDamage;
 
-    private DamageDiceRepresentation thrustDamage;
+    private ThrustDamage thrustDamage;
 
     private DamageAttribute(final Strength strength) {
+        final AttributeLevel strengthLevel = strength.getLevel();
+        thrustDamage = ThrustDamage.of(strengthLevel);
     }
 
     public static DamageAttribute of(final Strength strength) {
@@ -56,7 +57,12 @@ public class DamageAttribute implements AttributeObserver {
     @Override
     public void update(final AttributeData newData, final AttributeAbbreviate abbreviate) {
         checkArgument(abbreviate == ST);
+        final AttributeLevel level = newData.getLevel();
+        thrustDamage = thrustDamage.update(level);
+    }
 
-        // min((str - 14)/2, 1)
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        formatter.format("%s/%s", thrustDamage, swingDamage);
     }
 }

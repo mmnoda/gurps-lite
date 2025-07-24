@@ -22,37 +22,38 @@ package me.mmnoda.gurps.lite.domain.model.dice;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import me.mmnoda.gurps.lite.domain.model.dice.result.DiceSum;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonSerializer;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Iterator;
-import java.util.Objects;
 
-import me.mmnoda.gurps.lite.domain.model.dice.result.DiceSum;
-import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonDeserializer;
-import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfDicesJsonSerializer;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
+@EqualsAndHashCode(of = "quantity")
+@ToString(of = "quantity")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonSerialize(using = NumberOfDicesJsonSerializer.class)
 @JsonDeserialize(using = NumberOfDicesJsonDeserializer.class)
 public class NumberOfDices implements Serializable, Comparable<NumberOfDices>, Iterable<NumberOfDices>, Formattable {
 
     private static final NumberOfDices ZERO = of(BigInteger.ZERO);
+
     public static final NumberOfDices ONE = of(BigInteger.ONE);
     public static final NumberOfDices THREE = of(BigInteger.valueOf(3));
 
     private final BigInteger quantity;
-
-    private NumberOfDices(BigInteger quantity) {
-        this.quantity = quantity;
-    }
 
     public static NumberOfDices of(BigInteger quantity) {
         checkNotNull(quantity);
@@ -61,32 +62,6 @@ public class NumberOfDices implements Serializable, Comparable<NumberOfDices>, I
 
     public static NumberOfDices of(long quantity) {
         return of(BigInteger.valueOf(quantity));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(quantity);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof NumberOfDices) {
-            final NumberOfDices other = (NumberOfDices) obj;
-            return Objects.equals(this.quantity, other.quantity);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("quantity", quantity)
-                .toString();
     }
 
     public BigInteger toBigInteger() {

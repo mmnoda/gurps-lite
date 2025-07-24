@@ -22,21 +22,24 @@ package me.mmnoda.gurps.lite.domain.model.dice;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonSerializer;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
-import java.util.Objects;
-
-import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonDeserializer;
-import me.mmnoda.gurps.lite.infrastructure.converter.json.NumberOfFacesJsonSerializer;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
+@EqualsAndHashCode(of = "faces")
+@ToString(of = "faces")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonSerialize(using = NumberOfFacesJsonSerializer.class)
 @JsonDeserialize(using = NumberOfFacesJsonDeserializer.class)
 public class NumberOfFaces implements Serializable, Formattable, Comparable<NumberOfFaces> {
@@ -46,38 +49,8 @@ public class NumberOfFaces implements Serializable, Formattable, Comparable<Numb
 
     private final BigInteger faces;
 
-    private NumberOfFaces(BigInteger faces) {
-        this.faces = faces;
-    }
-
     public static NumberOfFaces of(BigInteger faces) {
         return new NumberOfFaces(faces);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(faces);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof NumberOfFaces) {
-            final NumberOfFaces other = (NumberOfFaces) obj;
-            return Objects.equals(this.faces, other.faces);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("faces", faces)
-                .toString();
     }
 
     public BigInteger toBigInteger() {

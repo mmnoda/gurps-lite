@@ -21,20 +21,14 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characte
  */
 
 import com.google.common.collect.ImmutableMap;
-
-import java.util.Map;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.character.CharacterPoints;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeAbbreviate;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeData;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeObserver;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.Dexterity;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.Health;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.*;
+
+import java.util.Map;
 
 /**
  *
@@ -105,14 +99,14 @@ public class BasicSpeed implements SecondaryCharacteristic, AttributeObserver, C
     private enum Updater {
         DEXTERITY {
             @Override
-            void update(BasicSpeed basicSpeed, AttributeData data) {
+            void update(final BasicSpeed basicSpeed, final AttributeData data) {
                 basicSpeed.dexterityLevel = data.getLevel();
             }
         },
 
         HEALTH {
             @Override
-            void update(BasicSpeed basicSpeed, AttributeData data) {
+            void update(final BasicSpeed basicSpeed, final AttributeData data) {
                 basicSpeed.healthLevel = data.getLevel();
             }
         };

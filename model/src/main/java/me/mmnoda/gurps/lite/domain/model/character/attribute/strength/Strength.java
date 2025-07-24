@@ -20,9 +20,6 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute.strength;
  * #L%
  */
 
-import java.util.Formattable;
-import java.util.Formatter;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -33,6 +30,9 @@ import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeData;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.PrimaryAttribute;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.HitPoint;
+
+import java.util.Formattable;
+import java.util.Formatter;
 
 /**
  *
@@ -55,6 +55,14 @@ public class Strength implements PrimaryAttribute, Comparable<Strength>, Formatt
 
     public boolean addObserver(final HitPoint hitPoint) {
         return data.addObserver(hitPoint);
+    }
+
+    public boolean addObserver(final BasicLift basicLift) {
+        return data.addObserver(basicLift);
+    }
+
+    public boolean addObserver(final DamageAttribute damageAttribute) {
+        return data.addObserver(damageAttribute);
     }
 
     public AttributeLevel getLevel() {

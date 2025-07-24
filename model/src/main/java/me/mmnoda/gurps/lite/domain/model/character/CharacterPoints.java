@@ -20,14 +20,14 @@ package me.mmnoda.gurps.lite.domain.model.character;
  * #L%
  */
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
-
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
 
 /**
  *
@@ -61,7 +61,7 @@ public final class CharacterPoints implements Serializable, Comparable<Character
     }
 
     public CharacterPoints calculate(final AttributeLevel attributeLevel) {
-        return of(points.multiply(attributeLevel.toBigInteger()));
+        return of(points.multiply(attributeLevel.getLevelBought()));
     }
 
     @Override

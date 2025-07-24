@@ -20,16 +20,15 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characte
  * #L%
  */
 
+import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.Dexterity;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.Health;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.Dexterity;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.Health;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.reset;
@@ -50,14 +49,14 @@ public class BasicSpeedTest {
     private Health health;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(dexterity.getLevel()).thenReturn(AttributeLevel.of(12));
         when(health.getLevel()).thenReturn(AttributeLevel.of(8));
         basicSpeed = BasicSpeed.of(dexterity, health);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         reset(dexterity, health);
     }
 

@@ -20,10 +20,9 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute;
  * #L%
  */
 
+import me.mmnoda.gurps.lite.domain.model.character.CharacterPoints;
 import org.junit.Before;
 import org.junit.Test;
-
-import me.mmnoda.gurps.lite.domain.model.character.CharacterPoints;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,24 +39,48 @@ public class AttributeDataTest {
     }
 
     @Test
-    public void should_add_ten_levels() {
-        attributeData.addLevel(AttributeLevel.TEN);
+    public void should_add_ten_integer_levels() {
+        addLevel(AttributeLevel.TEN);
         assertThatLevelIsEqualsTo(AttributeLevel.of(20));
         assertThatOverallCostIsEqualTo(CharacterPoints.of(100));
     }
 
     @Test
-    public void should_buy_negative_level() {
-        attributeData.addLevel(AttributeLevel.of(-2));
+    public void should_buy_integer_negative_level() {
+        addLevel(AttributeLevel.of(-2));
         assertThatLevelIsEqualsTo(AttributeLevel.of(8));
         assertThatOverallCostIsEqualTo(CharacterPoints.of(-20));
     }
 
     @Test
-    public void should_set_new_level_value() {
-        attributeData.setLevel(AttributeLevel.of(15));
+    public void should_set_new_integer_level_value() {
+        setLevel(AttributeLevel.of(15));
         assertThatLevelIsEqualsTo(AttributeLevel.of(15));
         assertThatOverallCostIsEqualTo(CharacterPoints.of(50));
+    }
+
+    @Test
+    public void should_set_new_fractioned_level_value() {
+        attributeData = AttributeData.of(CharacterPoints.TEN, AttributeLevel.of(5.50));
+        setLevel(AttributeLevel.of(7.50));
+        assertThatLevelIsEqualsTo(AttributeLevel.of(7.50));
+        assertThatOverallCostIsEqualTo(CharacterPoints.of(80));
+    }
+
+    @Test
+    public void should_add_fractioned_level() {
+        attributeData = AttributeData.of(CharacterPoints.TWENTY, AttributeLevel.of(7.25));
+        addLevel(AttributeLevel.of(0.50));
+        assertThatLevelIsEqualsTo(AttributeLevel.of(7.75));
+        assertThatOverallCostIsEqualTo(CharacterPoints.of(40));
+    }
+
+    private void setLevel(AttributeLevel of) {
+        attributeData.setLevel(of);
+    }
+
+    private void addLevel(AttributeLevel of) {
+        attributeData.addLevel(of);
     }
 
     private void assertThatOverallCostIsEqualTo(CharacterPoints of) {

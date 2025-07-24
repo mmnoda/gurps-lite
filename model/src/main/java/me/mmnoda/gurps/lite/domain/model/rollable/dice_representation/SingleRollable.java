@@ -24,7 +24,7 @@ import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import me.mmnoda.gurps.lite.domain.model.dice.result.SingleRollResult;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -36,7 +36,8 @@ public interface SingleRollable {
     }
 
     default SingleRollResult roll(final NumberOfDices numberOfDices) {
-        return SingleRollResult.of(numberOfDices, getNumberOfFaces(), new Random().nextInt(getNumberOfFaces().intValue()) + 1);
+        return SingleRollResult.of(numberOfDices, getNumberOfFaces(),
+                ThreadLocalRandom.current().nextInt(getNumberOfFaces().intValue()) + 1);
     }
 
     NumberOfFaces getNumberOfFaces();

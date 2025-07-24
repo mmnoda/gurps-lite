@@ -20,19 +20,22 @@ package me.mmnoda.gurps.lite.domain.model.dice;
  * #L%
  */
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.SingleRollable;
 
 import java.util.Formattable;
 import java.util.Formatter;
-import java.util.Objects;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
+@EqualsAndHashCode(of = "numberOfFaces")
+@ToString(of = "numberOfFaces")
 public class Dice implements SingleRollable, Formattable, Comparable<Dice> {
 
+    @Getter
     private final NumberOfFaces numberOfFaces;
 
     private Dice(NumberOfFaces numberOfFaces) {
@@ -41,36 +44,6 @@ public class Dice implements SingleRollable, Formattable, Comparable<Dice> {
 
     public static Dice of(NumberOfFaces numberOfFaces) {
         return new Dice(numberOfFaces);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberOfFaces);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof Dice) {
-            final Dice other = (Dice) obj;
-            return Objects.equals(this.numberOfFaces, other.numberOfFaces);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("numberOfFaces", numberOfFaces)
-                .toString();
-    }
-
-    @Override
-    public NumberOfFaces getNumberOfFaces() {
-        return numberOfFaces;
     }
 
     @Override

@@ -21,6 +21,8 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute;
  */
 
 import com.google.common.collect.Sets;
+import lombok.*;
+import me.mmnoda.gurps.lite.domain.model.character.CharacterPoints;
 
 import java.io.Serializable;
 import java.util.Formattable;
@@ -28,16 +30,12 @@ import java.util.Formatter;
 import java.util.Optional;
 import java.util.Set;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import me.mmnoda.gurps.lite.domain.model.character.CharacterPoints;
-
 /**
  *
  */
 @EqualsAndHashCode(of = {"costPerLevel", "level"})
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AttributeData implements Serializable, Formattable, Comparable<AttributeData> {
 
     private CharacterPoints costPerLevel;
@@ -56,22 +54,20 @@ public class AttributeData implements Serializable, Formattable, Comparable<Attr
 
     private final Set<AttributeObserver> observers = Sets.newHashSet();
 
-    protected AttributeData() {
-    }
-
     private AttributeData(final CharacterPoints costPerLevel, final AttributeLevel levelBase) {
         this(costPerLevel, levelBase, null);
     }
 
-    private AttributeData(final CharacterPoints costPerLevel, final AttributeLevel levelBase, AttributeAbbreviate attribute) {
-        this();
+    private AttributeData(final CharacterPoints costPerLevel, final AttributeLevel levelBase,
+                          final AttributeAbbreviate attribute) {
         this.costPerLevel = costPerLevel;
         this.levelBase = levelBase;
         this.level = levelBase;
         this.attribute = attribute;
     }
 
-    public static AttributeData of(final CharacterPoints costPerLevel, final AttributeLevel levelBase, AttributeAbbreviate attribute) {
+    public static AttributeData of(final CharacterPoints costPerLevel, final AttributeLevel levelBase,
+                                   final AttributeAbbreviate attribute) {
         return new AttributeData(costPerLevel, levelBase, attribute);
     }
 
@@ -114,7 +110,7 @@ public class AttributeData implements Serializable, Formattable, Comparable<Attr
     }
 
     public AttributeLevel getLevelTruncated() {
-        return level.trunc();
+        return level.dropFraction();
     }
 
     @Override
@@ -123,7 +119,7 @@ public class AttributeData implements Serializable, Formattable, Comparable<Attr
     }
 
     @Override
-    public int compareTo(AttributeData o) {
+    public int compareTo(final AttributeData o) {
         return level.compareTo(o.level);
     }
 }

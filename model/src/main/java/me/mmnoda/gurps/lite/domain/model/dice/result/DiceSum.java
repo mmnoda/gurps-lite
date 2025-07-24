@@ -22,18 +22,24 @@ package me.mmnoda.gurps.lite.domain.model.dice.result;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.OverallRollSumValue;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Formattable;
+import java.util.Formatter;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  *
  */
+@EqualsAndHashCode(of = "value")
+@ToString(of = {"value", "results"})
 public final class DiceSum implements Comparable<DiceSum>, Formattable, Iterable<SingleRollResult> {
 
     public static final DiceSum ZERO = new DiceSum(BigInteger.ZERO);
@@ -69,31 +75,6 @@ public final class DiceSum implements Comparable<DiceSum>, Formattable, Iterable
 
     public static DiceSum of(final SingleRollResult singleRollResult, final DiceSum diceSum) {
         return new DiceSum(singleRollResult, diceSum);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof DiceSum) {
-            final DiceSum other = (DiceSum) obj;
-            return Objects.equals(this.value, other.value);
-        }
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("value", value)
-                .add("results", results)
-                .toString();
     }
 
     public BigInteger toBigInteger() {

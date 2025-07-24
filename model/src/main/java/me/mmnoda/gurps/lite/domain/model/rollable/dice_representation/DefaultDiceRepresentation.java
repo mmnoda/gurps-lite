@@ -20,22 +20,23 @@ package me.mmnoda.gurps.lite.domain.model.rollable.dice_representation;
  * #L%
  */
 
-import java.io.Serializable;
-import java.util.Formattable;
-import java.util.Formatter;
-import java.util.Objects;
-
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.dice.DiceAdjustment;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfDices;
 import me.mmnoda.gurps.lite.domain.model.dice.NumberOfFaces;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import java.io.Serializable;
+import java.util.Formattable;
+import java.util.Formatter;
 
 /**
  *
  */
+@EqualsAndHashCode(of = {"numberOfDices", "rollable", "adjustment"})
+@ToString(of = {"numberOfDices", "rollable", "adjustment"})
 public class DefaultDiceRepresentation implements Serializable, DiceRepresentation, Formattable {
 
     @Getter
@@ -61,35 +62,6 @@ public class DefaultDiceRepresentation implements Serializable, DiceRepresentati
 
     public static DefaultDiceRepresentation of(SingleRollable rollable, NumberOfDices numberOfDices, DiceAdjustment adjustment) {
         return new DefaultDiceRepresentation(rollable, numberOfDices, adjustment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberOfDices, rollable, adjustment);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof DiceRepresentation) {
-            final DefaultDiceRepresentation other = (DefaultDiceRepresentation) obj;
-            return Objects.equals(this.numberOfDices, other.numberOfDices) && Objects.equals(this.rollable, other.rollable)
-                    && Objects.equals(this.adjustment, other.adjustment);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("numberOfDices", numberOfDices)
-                .add("rollable", rollable)
-                .add("adjustment", adjustment)
-                .toString();
     }
 
     @Override

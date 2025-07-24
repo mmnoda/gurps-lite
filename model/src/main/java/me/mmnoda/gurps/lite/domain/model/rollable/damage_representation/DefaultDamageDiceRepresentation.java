@@ -20,10 +20,6 @@ package me.mmnoda.gurps.lite.domain.model.rollable.damage_representation;
  * #L%
  */
 
-import java.io.Serializable;
-import java.util.Formattable;
-import java.util.Formatter;
-
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import me.mmnoda.gurps.lite.domain.model.damage.ArmorDivisor;
@@ -34,11 +30,15 @@ import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.DiceRepres
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.custom.CustomDiceRepresentationFactoryMethod;
 import me.mmnoda.gurps.lite.domain.model.rollable.dice_representation.result.RollResultSum;
 
+import java.io.Serializable;
+import java.util.Formattable;
+import java.util.Formatter;
+
 /**
  *
  */
 @EqualsAndHashCode(of = {"diceRepresentation", "damageType", "armorDivisor"})
-@ToString
+@ToString(of = {"diceRepresentation", "damageType", "armorDivisor"})
 public class DefaultDamageDiceRepresentation implements Serializable, DamageDiceRepresentation, Formattable {
 
     private final DiceRepresentation diceRepresentation;

@@ -20,6 +20,8 @@ package me.mmnoda.gurps.lite.domain.model.character;
  * #L%
  */
 
+import me.mmnoda.gurps.lite.domain.model.character.attribute.CharacterAttributes;
+
 import java.io.Serializable;
 
 /**
@@ -27,8 +29,9 @@ import java.io.Serializable;
  */
 public class Character implements Serializable {
 
-
     private CharacterPoints initialPoints = CharacterPoints.ZERO;
+
+    private CharacterAttributes characterAttributes;
 
 
 }

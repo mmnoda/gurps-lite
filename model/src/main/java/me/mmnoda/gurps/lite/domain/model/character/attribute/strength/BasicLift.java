@@ -20,11 +20,7 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute.strength;
  * #L%
  */
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeAbbreviate;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeData;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.AttributeLevel;
@@ -57,7 +53,8 @@ public class BasicLift implements AttributeObserver {
     private AttributeLevel calculate(final AttributeLevel strengthLevel) {
         return strengthLevel.multiply(strengthLevel)
                 .divide(DIVISOR)
-                .trunc();
+                // TODO check round mode
+                .dropFraction();
     }
 
     @Override

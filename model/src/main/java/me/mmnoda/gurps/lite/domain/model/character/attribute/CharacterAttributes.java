@@ -21,14 +21,10 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute;
  */
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.BasicMove;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.BasicSpeed;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.Dodge;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.FatiguePoints;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.HitPoint;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.Perception;
-import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.Will;
+import lombok.ToString;
+import me.mmnoda.gurps.lite.domain.model.character.attribute.secondary_characteristic.*;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.strength.BasicLift;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.strength.DamageAttribute;
 import me.mmnoda.gurps.lite.domain.model.character.attribute.strength.Strength;
@@ -36,6 +32,8 @@ import me.mmnoda.gurps.lite.domain.model.character.attribute.strength.Strength;
 /**
  *
  */
+@EqualsAndHashCode
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CharacterAttributes {
 
@@ -47,8 +45,6 @@ public class CharacterAttributes {
 
     private Health health;
 
-    private DamageAttribute damageAttribute;
-
     private BasicSpeed basicSpeed;
 
     private BasicMove basicMove;
@@ -58,6 +54,8 @@ public class CharacterAttributes {
     private Perception perception;
 
     private BasicLift basicLift;
+
+    private DamageAttribute damageAttribute;
 
     private FatiguePoints fatiguePoints;
 
@@ -74,6 +72,7 @@ public class CharacterAttributes {
 
         hitPoint = HitPoint.of(strength);
         basicLift = BasicLift.of(strength);
+        damageAttribute = DamageAttribute.of(strength);
 
         perception = Perception.of(intelligence);
         will = Will.of(intelligence);
@@ -98,6 +97,8 @@ public class CharacterAttributes {
 
     public void initialize() {
         strength.addObserver(hitPoint);
+        strength.addObserver(basicLift);
+        strength.addObserver(damageAttribute);
 
         dexterity.addObserver(basicSpeed);
 
@@ -109,7 +110,5 @@ public class CharacterAttributes {
 
         basicSpeed.addObserver(basicMove);
         basicSpeed.addObserver(dodge);
-
     }
-
 }

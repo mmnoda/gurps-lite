@@ -20,6 +20,10 @@ package me.mmnoda.gurps.lite.domain.model.character.attribute;
  * #L%
  */
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Delegate;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -27,26 +31,37 @@ import java.math.RoundingMode;
 import java.util.Formattable;
 import java.util.Formatter;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 /**
  *
  */
-@EqualsAndHashCode(of = "level")
+@EqualsAndHashCode(of = "level", callSuper = false)
 @ToString(of = "level")
-public final class AttributeLevel implements Serializable, Comparable<AttributeLevel>, Formattable {
+public final class AttributeLevel extends Number implements Serializable, Comparable<AttributeLevel>, Formattable {
 
     private static final int DEFAULT_DECIMAL_SCALE = 2;
 
+    private static final BigDecimal FRACTION_LEVEL_RATIO = BigDecimal.valueOf(0.25);
 
     public static final AttributeLevel ZERO = of(BigDecimal.ZERO);
     public static final AttributeLevel TEN = of(BigDecimal.TEN);
 
+    @Delegate(types = Number.class)
     private final BigDecimal level;
 
-    private AttributeLevel(BigDecimal level) {
-        this.level = level;
+    private final BigDecimal levelRatio;
+
+    private AttributeLevel(final BigDecimal level) {
+        if (isInteger(level)) {
+            this.level = level;
+            this.levelRatio = BigDecimal.ONE;
+        } else {
+            this.level = level.setScale(DEFAULT_DECIMAL_SCALE, RoundingMode.DOWN);
+            this.levelRatio = FRACTION_LEVEL_RATIO;
+        }
+    }
+
+    private boolean isInteger(final BigDecimal level) {
+        return level.scale() <= 0;
     }
 
     public static AttributeLevel of(BigDecimal value) {
@@ -58,12 +73,21 @@ public final class AttributeLevel implements Serializable, Comparable<AttributeL
     }
 
     public static AttributeLevel of(double value) {
-        return new AttributeLevel(BigDecimal.valueOf(value)
-                .setScale(DEFAULT_DECIMAL_SCALE, RoundingMode.DOWN));
+        return new AttributeLevel(BigDecimal.valueOf(value));
     }
 
-    public AttributeLevel trunc() {
-        return of(level.setScale(0, RoundingMode.DOWN));
+    // TODO rename method
+    public BigInteger getLevelBought() {
+        return level.divide(levelRatio, DEFAULT_DECIMAL_SCALE, RoundingMode.DOWN)
+                .toBigInteger();
+    }
+
+    public AttributeLevel dropFraction() {
+        return truncate(RoundingMode.DOWN);
+    }
+
+    public AttributeLevel truncate(final RoundingMode roundingMode) {
+        return of(level.setScale(0, roundingMode));
     }
 
     public AttributeLevel add(final AttributeLevel other) {
@@ -79,7 +103,11 @@ public final class AttributeLevel implements Serializable, Comparable<AttributeL
     }
 
     public AttributeLevel divide(final AttributeLevel other) {
-        return of(level.divide(other.level, DEFAULT_DECIMAL_SCALE, RoundingMode.HALF_EVEN));
+        return divide(other, RoundingMode.HALF_EVEN);
+    }
+
+    public AttributeLevel divide(final AttributeLevel other, final RoundingMode roundingMode) {
+        return of(level.divide(other.level, DEFAULT_DECIMAL_SCALE, roundingMode));
     }
 
     public BigDecimal toBigDecimal() {
@@ -91,12 +119,12 @@ public final class AttributeLevel implements Serializable, Comparable<AttributeL
     }
 
     @Override
-    public int compareTo(AttributeLevel o) {
+    public int compareTo(final AttributeLevel o) {
         return level.compareTo(o.level);
     }
 
     @Override
-    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+    public void formatTo(final Formatter formatter, int flags, int width, int precision) {
         formatter.format("%s", level);
     }
 }

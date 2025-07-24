@@ -20,26 +20,28 @@ package me.mmnoda.gurps.lite.domain.model.dice;
  * #L%
  */
 
-import com.google.common.collect.ImmutableMap;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableMap;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonDeserializer;
+import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonSerializer;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.Map;
-import java.util.Objects;
-
-import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonDeserializer;
-import me.mmnoda.gurps.lite.infrastructure.converter.json.DiceAdjustmentJsonSerializer;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  *
  */
+@EqualsAndHashCode(of = "value")
+@ToString(of = "value")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonSerialize(using = DiceAdjustmentJsonSerializer.class)
 @JsonDeserialize(using = DiceAdjustmentJsonDeserializer.class)
 public class DiceAdjustment implements Serializable, Comparable<DiceAdjustment>, Formattable {
@@ -50,42 +52,12 @@ public class DiceAdjustment implements Serializable, Comparable<DiceAdjustment>,
 
     private final BigInteger value;
 
-    private DiceAdjustment(BigInteger value) {
-        this.value = value;
-    }
-
     public static DiceAdjustment of(BigInteger value) {
         return new DiceAdjustment(value);
     }
 
     public static DiceAdjustment of(long value) {
         return of(BigInteger.valueOf(value));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof DiceAdjustment) {
-            final DiceAdjustment other = (DiceAdjustment) obj;
-            return Objects.equals(this.value, other.value);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("value", value)
-                .toString();
     }
 
     public BigInteger toBigInteger() {
